@@ -46,7 +46,7 @@ while True:
 
     if cmd == "1":
         clear()     # clear console
-        watering(motor1_pwm, 20)
+        watering(motor1_pwm, 60)
         #watering(motor2_pwm)
     elif cmd == "2":
         clear()     # clear console
