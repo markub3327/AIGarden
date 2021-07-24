@@ -35,7 +35,7 @@ while True:
     print()
     print("        1  Watering")
     print("        2  Scan")
-    print("        3  Scan")
+    print("        3  Settings")
     print("        q  Quit")
     print()
     cmd = input(">> ")
