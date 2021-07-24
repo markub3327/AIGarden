@@ -5,7 +5,7 @@ import os
 # Watering
 def watering(motor, duration):
     # start pump
-    for duty in range(1, 101, 1):
+    for duty in range(50, 101, 1):
         motor.ChangeDutyCycle(duty)
         sleep(0.05)
 
