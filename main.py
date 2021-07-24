@@ -9,7 +9,7 @@ def watering(motor, duration):
 
     # waiting ...
     for t in range(1, 101, 1):
-        sleep(duration)
+        sleep(duration / 100.0)
         print(f"Task Completed ... {t}%", end='\r')
 
     # stop pump
@@ -46,7 +46,7 @@ while True:
 
     if cmd == "1":
         clear()     # clear console
-        watering(motor1_pwm)
+        watering(motor1_pwm, 20)
         #watering(motor2_pwm)
     elif cmd == "2":
         clear()     # clear console
