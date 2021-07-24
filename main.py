@@ -7,13 +7,13 @@ def watering(motor):
     # start pump
     for force in range(1, 101, 1):
         motor.ChangeDutyCycle(force)
-        sleep(0.05)
-        print(f"Watering ... {force // 2} %")
+        sleep(0.1)
+        print(f"Task Completed ... {force // 2}%", end='\r')
 
     # waiting ...
     for t in range(1, 101, 1):
-        sleep(0.05)
-        print(f"Watering ... {(t // 2) + 50} %")
+        sleep(0.1)
+        print(f"Task Completed ... {(t // 2) + 50}%", end='\r')
 
     # stop pump
     motor.ChangeDutyCycle(0)
@@ -48,11 +48,14 @@ while True:
     cmd = input(">> ")
 
     if cmd == "1":
+        clear()     # clear console
         watering(motor1_pwm)
-        watering(motor2_pwm)
+        #watering(motor2_pwm)
     elif cmd == "2":
+        clear()     # clear console
         print("Scanning ...")
     elif cmd == "3":
+        clear()     # clear console
         end = False
         while end == False:
             print("Settings")
@@ -61,15 +64,12 @@ while True:
             cmd = input(">> ")
 
             if cmd == 'q':
+                clear()     # clear console
                 break
             else:
                 print("Bad command was eneterd.")
-
-            clear()     # clear console
     elif cmd == 'q':
         print("Terminated by user 👋👋👋")
         exit()
     else:
         print("Bad command was eneterd.")
-    
-    clear()     # clear console
