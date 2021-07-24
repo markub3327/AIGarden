@@ -1,4 +1,4 @@
-# AIGarden
+# AIGarden 🚰🥕🍅
 
 [![Release](https://img.shields.io/github/release/markub3327/AIGarden)](https://github.com/markub3327/AIGarden/releases)
 ![Tag](https://img.shields.io/github/v/tag/markub3327/AIGarden)

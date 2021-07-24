@@ -4,11 +4,18 @@ import os
 
 # Watering
 def watering(motor):
-    for force in range(1,101,1):
+    # start pump
+    for force in range(1, 101, 1):
         motor.ChangeDutyCycle(force)
-        sleep(0.5)
-        print(f"Watering ... {force} %")
-    sleep(5)
+        sleep(0.05)
+        print(f"Watering ... {force // 2} %")
+
+    # waiting ...
+    for t in range(1, 101, 1):
+        sleep(0.05)
+        print(f"Watering ... {(t // 2) + 50} %")
+
+    # stop pump
     motor.ChangeDutyCycle(0)
 
 # Init console
@@ -57,6 +64,11 @@ while True:
                 break
             else:
                 print("Bad command was eneterd.")
+
+            clear()     # clear console
+    elif cmd == 'q':
+        print("Terminated by user 👋👋👋")
+        exit()
     else:
         print("Bad command was eneterd.")
     
