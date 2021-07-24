@@ -5,7 +5,9 @@ import os
 # Watering
 def watering(motor, duration):
     # start pump
-    motor.ChangeDutyCycle(100)
+    for duty in range(1, 101, 1):
+        motor.ChangeDutyCycle(duty)
+        sleep(0.05)
 
     # waiting ...
     for t in range(1, 101, 1):
@@ -26,9 +28,9 @@ motor1_pin = 32
 motor2_pin = 33
 GPIO.setup(motor1_pin, GPIO.OUT)
 GPIO.setup(motor2_pin, GPIO.OUT)
-motor1_pwm = GPIO.PWM(motor1_pin, 1000)     # 1kHz
+motor1_pwm = GPIO.PWM(motor1_pin, 10000)     # 10 kHz
 motor1_pwm.start(0)
-motor2_pwm = GPIO.PWM(motor2_pin, 1000)     # 1kHz
+motor2_pwm = GPIO.PWM(motor2_pin, 10000)     # 10 kHz
 motor2_pwm.start(0)
 
 # Main loop
