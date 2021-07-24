@@ -3,17 +3,14 @@ from time import sleep
 import os
 
 # Watering
-def watering(motor):
+def watering(motor, duration):
     # start pump
-    for force in range(1, 101, 1):
-        motor.ChangeDutyCycle(force)
-        sleep(0.1)
-        print(f"Task Completed ... {force // 2}%", end='\r')
+    motor.ChangeDutyCycle(100)
 
     # waiting ...
     for t in range(1, 101, 1):
-        sleep(0.1)
-        print(f"Task Completed ... {(t // 2) + 50}%", end='\r')
+        sleep(duration)
+        print(f"Task Completed ... {t}%", end='\r')
 
     # stop pump
     motor.ChangeDutyCycle(0)
@@ -58,7 +55,7 @@ while True:
         clear()     # clear console
         end = False
         while end == False:
-            print("Settings")
+            print("Settings ⚙️")
             print("        q  Quit")
             print()
             cmd = input(">> ")
