@@ -13,10 +13,18 @@ class AIGarden:
         # Humidity sensor
         self.dhtDevice = adafruit_dht.DHT11(dht_pin, use_pulseio=False)
 
+        # CSV log
+        self.log_file = open("log.csv", "a")
+        self.log_file.write(f"temp0;humidity;pumps0;pumps1\r\n")
+
     # Watering
     def watering(self, pump_id, duration):
         # start pump
         self.pumps[pump_id].value = 0.75
+
+        # write to log (befor)
+        self.readHumidity()
+        self.log_file.write(f"{self.temperature_c};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n")
 
         # waiting ...
         for t in range(1, 101, 1):
@@ -25,6 +33,10 @@ class AIGarden:
 
         # stop pump
         self.pumps[pump_id].value = 0.0
+
+        # write to log (after)
+        self.readHumidity()
+        self.log_file.write(f"{self.temperature_c};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n")
 
     def readHumidity(self):
         self.temperature_c = self.dhtDevice.temperature
@@ -37,3 +49,6 @@ class AIGarden:
 
     def readSoilMoisture(self):
         pass
+    
+    def close(self):
+        self.log_file.close()
