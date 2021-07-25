@@ -25,7 +25,7 @@ class AIGarden:
         # write to log (befor)
         self.readHumidity()
         self.log_file.write(
-            f"{self.temperature_c};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n"
+            f"{self.temp0};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n"
         )
 
         # waiting ...
@@ -39,26 +39,25 @@ class AIGarden:
         # write to log (after)
         self.readHumidity()
         self.log_file.write(
-            f"{self.temperature_c};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n"
+            f"{self.temp0};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n"
         )
 
     def readHumidity(self):
         try:
-            self.temperature_c = self.dhtDevice.temperature
+            self.temp0 = self.dhtDevice.temperature
             self.humidity = self.dhtDevice.humidity
 
             # debug
             print(
-                f"Temp 0: {self.temperature_c}°C\tHumidity: {self.humidity}%"
+                f"Temp 0: {self.temp0}°C\tHumidity: {self.humidity}%"
             )
         except RuntimeError as error:
             print(error.args[0])
-        except Exception as error:
-            self.dhtDevice.exit()
-            raise error
 
     def readSoilMoisture(self):
         pass
 
     def close(self):
         self.log_file.close()
+        
+        self.dhtDevice.exit()

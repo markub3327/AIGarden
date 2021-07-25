@@ -64,6 +64,7 @@ if __name__ == "__main__":
                 if cmd == "1":
                     cmd = input(f"Watering Time ({watering_time}) : ")
                     watering_time = int(cmd)
+                    break
                 if cmd == "q":
                     clear()  # clear console
                     break
