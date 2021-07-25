@@ -10,7 +10,7 @@ def clear():
 if __name__ == "__main__":
     # Init AI garden
     my_ai_garden = AIGarden()
-    watering_time = 60
+    watering_time = 120
 
     # Main loop
     while True:

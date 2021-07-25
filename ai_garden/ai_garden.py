@@ -22,12 +22,12 @@ class AIGarden:
     # Watering
     def watering(self, pump_id, duration):
         # start pump
-        self.pumps[pump_id].value = 0.75
+        self.pumps[pump_id].value = 1.0
 
         # write to log (befor)
         #self.readHumidity()
         self.log_file.write(
-            f"{self.temp0};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n"
+            f"{self.temp0};{self.humidity};{self.pumps[0].value};{self.pumps[1].value}\r\n"
         )
 
         # waiting ...
