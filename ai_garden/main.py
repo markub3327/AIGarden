@@ -70,6 +70,7 @@ if __name__ == "__main__":
                 else:
                     print("Bad command was eneterd.")
         elif cmd == "q":
+            my_ai_garden.close()
             print("Terminated by user 👋👋👋")
             exit()
         else:

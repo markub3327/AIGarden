@@ -15,7 +15,7 @@ class AIGarden:
 
         # CSV log
         self.log_file = open("log.csv", "a")
-        self.log_file.write("temp0;humidity;pumps0;pumps1\r\n")
+        # self.log_file.write("temp0;humidity;pumps0;pumps1\r\n")
 
     # Watering
     def watering(self, pump_id, duration):
@@ -43,13 +43,22 @@ class AIGarden:
         )
 
     def readHumidity(self):
-        self.temperature_c = self.dhtDevice.temperature
-        self.humidity = self.dhtDevice.humidity
+        try:
+            self.temperature_c = self.dhtDevice.temperature
+            self.humidity = self.dhtDevice.humidity
 
-        # debug
-        print(
-            "Temp 0: {:.1f}°C\tHumidity: {}%".format(self.temperature_c, self.humidity)
-        )
+            # debug
+            print(
+                "Temp 0: {:.1f}°C\tHumidity: {}%".format(
+                    self.temperature_c, self.humidity
+                )
+            )
+        except RuntimeError as error:
+            print(error.args[0])
+            sleep(2.0)
+        except Exception as error:
+            self.dhtDevice.exit()
+            raise error
 
     def readSoilMoisture(self):
         pass
