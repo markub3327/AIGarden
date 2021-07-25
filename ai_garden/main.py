@@ -48,7 +48,7 @@ if __name__ == "__main__":
         elif cmd == "2":
             clear()  # clear console
             print("Scanning ...")
-            temp_0, humidity = my_ai_garden.readHumidity()
+            my_ai_garden.readHumidity()
             my_ai_garden.readSoilMoisture()
             print()
         elif cmd == "3":
