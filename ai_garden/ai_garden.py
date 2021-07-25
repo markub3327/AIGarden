@@ -20,9 +20,9 @@ class AIGarden:
         # self.log_file.write("temp0;humidity;pumps0;pumps1\r\n")
 
     # Watering
-    def watering(self, pump_id, duration):
+    def watering(self, pump_id, duration, force):
         # start pump
-        self.pumps[pump_id].value = 1.0
+        self.pumps[pump_id].value = force
 
         # write to log (befor)
         #self.readHumidity()

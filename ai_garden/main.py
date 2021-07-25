@@ -11,6 +11,7 @@ if __name__ == "__main__":
     # Init AI garden
     my_ai_garden = AIGarden()
     watering_time = 120
+    watering_force = 0.8
 
     # Main loop
     while True:
@@ -37,9 +38,9 @@ if __name__ == "__main__":
                 cmd = input(">> ")
 
                 if cmd == "1":
-                    my_ai_garden.watering(0, duration=watering_time)
+                    my_ai_garden.watering(0, duration=watering_time, force=watering_force)
                 elif cmd == "2":
-                    my_ai_garden.watering(1, duration=watering_time)
+                    my_ai_garden.watering(1, duration=watering_time, force=watering_force)
                 elif cmd == "q":
                     clear()  # clear console
                     break
@@ -64,6 +65,10 @@ if __name__ == "__main__":
                 if cmd == "1":
                     cmd = input(f"Watering Time ({watering_time}) : ")
                     watering_time = int(cmd)
+                    break
+                if cmd == "2":
+                    cmd = input(f"Watering Force ({watering_force}) : ")
+                    watering_force = int(cmd)
                     break
                 if cmd == "q":
                     clear()  # clear console
