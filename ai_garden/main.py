@@ -11,7 +11,7 @@ if __name__ == "__main__":
     # Init AI garden
     my_ai_garden = AIGarden()
     watering_time = 120
-    watering_force = 0.8
+    watering_force = 0.9
 
     # Main loop
     while True:
@@ -58,6 +58,7 @@ if __name__ == "__main__":
             while end is False:
                 print("Settings ⚙️")
                 print("        1  Watering Time")
+                print("        2  Watering Force")
                 print("        q  Quit 🚪")
                 print()
                 cmd = input(">> ")
@@ -68,7 +69,7 @@ if __name__ == "__main__":
                     break
                 if cmd == "2":
                     cmd = input(f"Watering Force ({watering_force}) : ")
-                    watering_force = int(cmd)
+                    watering_force = float(cmd)
                     break
                 if cmd == "q":
                     clear()  # clear console
