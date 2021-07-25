@@ -55,7 +55,6 @@ class AIGarden:
             )
         except RuntimeError as error:
             print(error.args[0])
-            sleep(2.0)
         except Exception as error:
             self.dhtDevice.exit()
             raise error
