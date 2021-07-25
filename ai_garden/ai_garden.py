@@ -12,6 +12,8 @@ class AIGarden:
 
         # Humidity sensor
         self.dhtDevice = adafruit_dht.DHT11(dht_pin, use_pulseio=False)
+        self.temp0 = 0.0
+        self.humidity = 0.0
 
         # CSV log
         self.log_file = open("log.csv", "a")
@@ -23,7 +25,7 @@ class AIGarden:
         self.pumps[pump_id].value = 0.75
 
         # write to log (befor)
-        self.readHumidity()
+        #self.readHumidity()
         self.log_file.write(
             f"{self.temp0};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n"
         )
