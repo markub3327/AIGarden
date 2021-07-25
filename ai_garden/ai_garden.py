@@ -49,9 +49,7 @@ class AIGarden:
 
             # debug
             print(
-                "Temp 0: {:.1f}°C\tHumidity: {}%".format(
-                    self.temperature_c, self.humidity
-                )
+                f"Temp 0: {self.temperature_c}°C\tHumidity: {self.humidity}%"
             )
         except RuntimeError as error:
             print(error.args[0])
