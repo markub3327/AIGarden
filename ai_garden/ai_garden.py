@@ -40,10 +40,11 @@ class AIGarden:
         # stop pump
         self.pumps[pump_id].value = 0.0
 
-        # write to log (after)
-        self.readHumidity()
+        # write to log (befor)
+        #self.readHumidity()
+        now = datetime.now()
         self.log_file.write(
-            f"{self.temp0};{self.humidity};{self.pumps[0]};{self.pumps[1]}\r\n"
+            f"{now.strftime('%H:%M:%S')};{self.temp0};{self.humidity};{self.pumps[0].value};{self.pumps[1].value}\r\n"
         )
 
     def readHumidity(self):
