@@ -3,6 +3,7 @@ from time import sleep
 import adafruit_dht
 import board
 from gpiozero import PWMOutputDevice
+from datetime import datetime
 
 
 class AIGarden:
@@ -11,7 +12,7 @@ class AIGarden:
         self.pumps = [PWMOutputDevice(pump0_pin), PWMOutputDevice(pump1_pin)]
 
         # Humidity sensor
-        self.dhtDevice = adafruit_dht.DHT11(dht_pin, use_pulseio=False)
+        self.dhtDevice = adafruit_dht.DHT22(dht_pin, use_pulseio=False)
         self.temp0 = 0.0
         self.humidity = 0.0
 
@@ -26,8 +27,9 @@ class AIGarden:
 
         # write to log (befor)
         #self.readHumidity()
+        now = datetime.now()
         self.log_file.write(
-            f"{self.temp0};{self.humidity};{self.pumps[0].value};{self.pumps[1].value}\r\n"
+            f"{now.strftime('%H:%M:%S')};{self.temp0};{self.humidity};{self.pumps[0].value};{self.pumps[1].value}\r\n"
         )
 
         # waiting ...

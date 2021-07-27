@@ -2,7 +2,6 @@ import os
 
 from ai_garden import AIGarden
 
-
 def clear():
     os.system("clear")
 
@@ -11,7 +10,7 @@ if __name__ == "__main__":
     # Init AI garden
     my_ai_garden = AIGarden()
     watering_time = 120
-    watering_force = 0.9
+    watering_force = 0.85
 
     # Main loop
     while True:
