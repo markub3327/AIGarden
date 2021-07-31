@@ -2,6 +2,7 @@ import os
 
 from ai_garden import AIGarden
 
+
 def clear():
     os.system("clear")
 
@@ -37,9 +38,13 @@ if __name__ == "__main__":
                 cmd = input(">> ")
 
                 if cmd == "1":
-                    my_ai_garden.watering(0, duration=watering_time, force=watering_force)
+                    my_ai_garden.watering(
+                        0, duration=watering_time, force=watering_force
+                    )
                 elif cmd == "2":
-                    my_ai_garden.watering(1, duration=watering_time, force=watering_force)
+                    my_ai_garden.watering(
+                        1, duration=watering_time, force=watering_force
+                    )
                 elif cmd == "q":
                     clear()  # clear console
                     break
