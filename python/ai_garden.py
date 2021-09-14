@@ -23,12 +23,11 @@ class AIGarden:
         self.cam_0 = cv2.VideoCapture(0)
 
         # CSV log
+        self.log_file = open("log.csv", "a")
         if not os.path.exists("log.csv"):
             self.log_file.write(
                 "time;temp_0;temp_1;heat_index;humidity_0;pressure_0;soil_0;soil_1\r\n"
             )
-
-        self.log_file = open("log.csv", "a")
 
     # Watering
     def watering(self, pump_id, duration, force):
@@ -60,7 +59,9 @@ class AIGarden:
         # Capture frame
         ret, frame = self.cam_0.read()
         if ret:
-        	cv2.imwrite('image.jpg', frame)
+            cv2.imwrite('image.jpg', frame)
+
+            print("Image captured !")
 
     def close(self):
         self.log_file.close()

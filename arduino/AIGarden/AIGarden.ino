@@ -72,7 +72,7 @@ void screen1() {
 
   lcd.setCursor(0, 2);
   lcd.print(F("Press 0: "));
-  lcd.print(pressure_0 / 100.0f);
+  lcd.print(pressure_0);
   lcd.print(F("hPa"));
 
   lcd.setCursor(0, 3);
@@ -135,8 +135,9 @@ void loop() {
   }
 
   // Read BMP sensor
-  bmp.getPressure(&pressure_0);
   bmp.getTemperature(&temp_1);
+  bmp.getPressure(&pressure_0);
+  pressure_0 /= 100.0f;   // convert to hPa
 
   // Read Soil sensors - get mini-batch statistics
   soil_0 = 0; soil_1 = 0;
