@@ -26,13 +26,21 @@ unsigned long Serial_lastTime = 0;
 
 
 void scroll() {
-  for (int positionCounter = 0; positionCounter < (20 + 20); positionCounter++) {
-    // scroll one position right
-    lcd.scrollDisplayRight();
-    if (positionCounter < 20)
-      delay(100);
+  for (int positionCounter = 0; positionCounter < 20; positionCounter++) {
+    lcd.setCursor(1, 0);
+    lcd.print(' ');
+
+    lcd.setCursor(1, 1);
+    lcd.print(' ');
+
+    lcd.setCursor(1, 2);
+    lcd.print(' ');
+
+    lcd.setCursor(1, 3);
+    lcd.print(' ');
+
+    delay(100);
   }
-  lcd.clear();
 }
 
 void screen0() {
