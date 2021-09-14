@@ -26,10 +26,11 @@ unsigned long Serial_lastTime = 0;
 
 
 void scroll() {
-  for (int positionCounter = 0; positionCounter < 20 + 20; positionCounter++) {
+  for (int positionCounter = 0; positionCounter < (20 + 20); positionCounter++) {
     // scroll one position right
     lcd.scrollDisplayRight();
-    delay(100);
+    if (positionCounter < 20)
+      delay(100);
   }
   lcd.clear();
 }
@@ -141,12 +142,12 @@ void loop() {
 
   // Read Soil sensors - get mini-batch statistics
   soil_0 = 0; soil_1 = 0;
-  for (int i = 0; i < 32; i++)
+  for (int i = 0; i < 128; i++)
   {
     soil_0 += analogRead(A0);
     soil_1 += analogRead(A1);
   }
-  soil_0 /= 32.0; soil_1 /= 32.0;
+  soil_0 /= 128.0; soil_1 /= 128.0;
 
   // Compute heat index in Celsius (isFahreheit = false)
   heat_index = dht.computeHeatIndex((temp_0+temp_1)/2.0, humidity_0, false);
