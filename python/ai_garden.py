@@ -1,6 +1,6 @@
 
 import cv2
-from .serial_thread import SerialThread
+from serial_thread import SerialThread
 
 class AIGarden:
     def __init__(self):
@@ -25,6 +25,5 @@ class AIGarden:
             print("Image captured !")
 
     def close(self):
-        self.serialThread.log_file.close()
-
+        self.serialThread.close()
         self.cam_0.release()
