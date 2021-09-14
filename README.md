@@ -1,4 +1,4 @@
-# AIGarden 🚰🥕🍅
+# AIGarden 🚰🌱🥕🍅
 
 [![Release](https://img.shields.io/github/release/markub3327/AIGarden)](https://github.com/markub3327/AIGarden/releases)
 ![Tag](https://img.shields.io/github/v/tag/markub3327/AIGarden)
@@ -7,8 +7,14 @@
 ![Languages](https://img.shields.io/github/languages/count/markub3327/AIGarden)
 ![Size](https://img.shields.io/github/repo-size/markub3327/AIGarden)
 
-Automate your garden with machine learning and Raspberry Pi.
+This open-source project is using Arduino and Raspberry Pi to control your garden and simplified caring about the garden. You can make watering autonomous and monitoring plants smarter.
 
-----------------------------------
+| | |
+|------------------|------------------------------|
+| Operating system | Ubuntu Server 20.04          |
+| Boards           | Raspberry Pi 4, Arduino Nano |
+| Sensors          | DHT22, BMP180, Soil moisture |
 
-**Frameworks:** Tensorflow, OpenCV
+
+-----------------------------------------
+**Frameworks:** Tensorflow, OpenCV, WanDB

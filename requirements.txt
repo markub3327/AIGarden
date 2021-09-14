@@ -1,0 +1,15 @@
+###### Tensorflow ######
+#
+tflite_runtime
+#
+#
+###### OpenCV ######
+#
+opencv-python>=3.
+#
+#
+####### Logger ######
+#
+wandb
+#
+#

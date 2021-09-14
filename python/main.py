@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     # Main loop
     while True:
-        print("AIGarden 🚰🥕🍅")
+        print("AIGarden 🚰🌱🥕🍅")
         print("Bc. Martin Kubovčík")
         print("https://github.com/markub3327/AIGarden")
         print()
@@ -28,8 +28,7 @@ if __name__ == "__main__":
 
         if cmd == "1":
             clear()  # clear console
-            end = False
-            while end is False:
+            while True:
                 print("Select pump")
                 print("        1  Pump 0")
                 print("        2  Pump 1")
@@ -53,13 +52,12 @@ if __name__ == "__main__":
         elif cmd == "2":
             clear()  # clear console
             print("Scanning ...")
-            my_ai_garden.readHumidity()
-            my_ai_garden.readSoilMoisture()
+            my_ai_garden.readSensors()
+            my_ai_garden.scanPlants()
             print()
         elif cmd == "3":
             clear()  # clear console
-            end = False
-            while end is False:
+            while True:
                 print("Settings ⚙️")
                 print("        1  Watering Time")
                 print("        2  Watering Force")
