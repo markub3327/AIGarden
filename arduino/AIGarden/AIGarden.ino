@@ -27,16 +27,16 @@ unsigned long Serial_lastTime = 0;
 
 void scroll() {
   for (int positionCounter = 0; positionCounter < 20; positionCounter++) {
-    lcd.setCursor(1, 0);
+    lcd.setCursor(positionCounter, 0);
     lcd.print(' ');
 
-    lcd.setCursor(1, 1);
+    lcd.setCursor(positionCounter, 1);
     lcd.print(' ');
 
-    lcd.setCursor(1, 2);
+    lcd.setCursor(positionCounter, 2);
     lcd.print(' ');
 
-    lcd.setCursor(1, 3);
+    lcd.setCursor(positionCounter, 3);
     lcd.print(' ');
 
     delay(100);
