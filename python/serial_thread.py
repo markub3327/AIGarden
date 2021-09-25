@@ -1,25 +1,26 @@
-import serial
+import os
 import threading
 from datetime import datetime
-import os
+
+import serial
+from utils import getIPAddress
 
 
-
-class SerialThread():
+class SerialThread:
     """
     SerialThread
     ===============
-    
+
     Attributes:
         port_name (str): port name
     """
-    
+
     def __init__(self, port_name="/dev/ttyUSB0"):
         self.done = False
 
         self.serial_fd = serial.Serial(port_name, 9600, timeout=None)
         self.serial_fd.flush()
-    
+
         # CSV log
         self.log_file = open("log.csv", "a")
         if not os.path.exists("log.csv"):
@@ -28,8 +29,8 @@ class SerialThread():
             )
 
         # creating thread
-        self.thread = threading.Thread(target=self.fn) #, args=(10,))
-    
+        self.thread = threading.Thread(target=self.fn)  # , args=(10,))
+
         self.sensors = {
             "temp_0": 0.0,
             "temp_1": 0.0,
@@ -47,31 +48,39 @@ class SerialThread():
 
             # use CSV formatting
             if self.serial_fd.in_waiting > 0:
-                line = self.serial_fd.readline().decode("utf-8").rstrip()
-                values = line.split(";")
+                try:
+                    line = self.serial_fd.readline().decode("utf-8").rstrip()
+                    values = line.split(";")
 
-                if "$READ" in values[0]:
-                    self.sensors["temp_0"] = values[1]
-                    self.sensors["temp_1"] = values[2]
-                    self.sensors["heat_index"] = values[3]
-                    self.sensors["humidity_0"] = values[4]
-                    self.sensors["pressure_0"] = values[5]
-                    self.sensors["soil_0"] = values[6]
-                    self.sensors["soil_1"] = values[7]
+                    if "$READ" in values[0]:
+                        self.sensors["temp_0"] = values[1]
+                        self.sensors["temp_1"] = values[2]
+                        self.sensors["heat_index"] = values[3]
+                        self.sensors["humidity_0"] = values[4]
+                        self.sensors["pressure_0"] = values[5]
+                        self.sensors["soil_0"] = values[6]
+                        self.sensors["soil_1"] = values[7]
 
-                    self.log_file.write(
-                        f"{now.strftime('%d.%m.%Y, %H:%M:%S')};{self.sensors['temp_0']};{self.sensors['temp_1']};{self.sensors['heat_index']};{self.sensors['humidity_0']};{self.sensors['pressure_0']};{self.sensors['soil_0']};{self.sensors['soil_1']}\r\n"
+                        self.log_file.write(
+                            f"{now.strftime('%d.%m.%Y, %H:%M:%S')};{self.sensors['temp_0']};{self.sensors['temp_1']};{self.sensors['heat_index']};{self.sensors['humidity_0']};{self.sensors['pressure_0']};{self.sensors['soil_0']};{self.sensors['soil_1']}\r\n"
+                        )
+
+                    # Automatically sync clock
+                    self.write(
+                        f"$TIME;{now.day};{now.month};{now.year};{now.hour};{now.minute};{now.second}\n"
                     )
 
-            # Automatically sync clock
-            self.write(f"$TIME;{now.day};{now.month};{now.year};{now.hour};{now.minute};{now.second}\n")
+                    # send IP address
+                    self.write(f"$IP;{getIPAddress()}\n")
+                except UnicodeDecodeError:
+                    pass
 
     def run(self):
         # starting thread
         self.thread.start()
-    
+
     def write(self, data):
-        return self.serial_fd.write(data.encode('ascii'))
+        return self.serial_fd.write(data.encode("ascii"))
 
     def close(self):
         self.done = True

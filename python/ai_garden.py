@@ -1,7 +1,6 @@
-
 import cv2
 from serial_thread import SerialThread
-from utils import getIPAddress
+
 
 class AIGarden:
     def __init__(self):
@@ -9,9 +8,6 @@ class AIGarden:
 
         self.serialThread = SerialThread()
         self.serialThread.run()
-
-        # send IP address
-        self.serialThread.write(f"$IP;{getIPAddress()}\n")
 
     # Watering
     def watering(self, pump_id, duration, force):
@@ -24,7 +20,7 @@ class AIGarden:
         # Capture frame
         ret, frame = self.cam_0.read()
         if ret:
-            cv2.imwrite('image.jpg', frame)
+            cv2.imwrite("image.jpg", frame)
 
             print("Image captured !")
 

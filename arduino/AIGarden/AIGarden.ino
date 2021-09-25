@@ -21,9 +21,6 @@ Screen screen(10000);
 // Soil
 float soil_0, soil_1;
 
-// Serial
-unsigned long Serial_lastTime = 0;
-
 // Time
 union {
     struct {
@@ -164,26 +161,21 @@ void loop() {
   // Compute heat index in Celsius (isFahreheit = false)
   heat_index = dht.computeHeatIndex((temp_0+temp_1)/2.0, humidity_0, false);
 
-  // Send to RPi - every 5s
-  if (currentTime - Serial_lastTime >= 5000) {
-    // save the last time
-    Serial_lastTime = currentTime;
-
-    Serial.print("$READ;");
-    Serial.print(temp_0);
-    Serial.print(';');
-    Serial.print(temp_1);
-    Serial.print(';');
-    Serial.print(heat_index);
-    Serial.print(';');
-    Serial.print(humidity_0);
-    Serial.print(';');
-    Serial.print(pressure_0);
-    Serial.print(';');
-    Serial.print(soil_0);
-    Serial.print(';');
-    Serial.println(soil_1);
-  }
+  // Send to RPi
+  Serial.print("$READ;");
+  Serial.print(temp_0);
+  Serial.print(';');
+  Serial.print(temp_1);
+  Serial.print(';');
+  Serial.print(heat_index);
+  Serial.print(';');
+  Serial.print(humidity_0);
+  Serial.print(';');
+  Serial.print(pressure_0);
+  Serial.print(';');
+  Serial.print(soil_0);
+  Serial.print(';');
+  Serial.println(soil_1);
 
   // Show on screen
   if (screen.currentScreen == 0)
