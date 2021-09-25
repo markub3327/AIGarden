@@ -105,7 +105,7 @@ void screen3() {
   lcd.print(time.time_s.second);
 
   lcd.setCursor(0, 2);
-  lcd.print(F("IP address: "));
+  lcd.print(F("IP: "));
   lcd.print(IPAddr);
 }
 
@@ -132,6 +132,7 @@ void setup() {
 
   // End of init
   delay(5000);
+  scroll();
 }
 
 void loop() {
@@ -210,14 +211,14 @@ void serialEvent() {
   static char inputString[256];
 
   while (Serial.available()) {
-    char inChar = (char)Serial.read();
-
-    if (inChar == '\n' || i >= 256) {
-    
+    if (inChar == '\n') {
+      char* substring = strtok(inputString, ";");
+      
       // process the command
-      if (strstr(inputString, "$TIME") != NULL)
+      if (strstr(substring, "$TIME") != NULL)
       {
-        char* substring = strtok(inputString, ";") + 1;
+        substring = strtok(0, ";");
+        i = 0;
         while (substring != 0)
         {
           time.time_a[i++] = atoi(substring);
@@ -225,20 +226,24 @@ void serialEvent() {
           substring = strtok(0, ";");
         } 
       }
-      else if (strstr(inputString, "$IP") != NULL)
+      else if (strstr(substring, "$IP") != NULL)
       {
-        char* substring = strtok(inputString, ";") + 1;
+        substring = strtok(0, ";");
         while (substring != 0)
         {
           // save IP
-          memcpy(IPAddr, substring, strlen(substring)+1);
-
+          memcpy(IPAddr, substring, strlen(substring));
+ 
           // Go to next substring
           substring = strtok(0, ";");
         }        
       }
+    
+      // clear buffer
+      memset(inputString, 0, sizeof(inputString));
+      i = 0;
+    } else {
+      inputString[i++] = inChar;
     }
-
-    inputString[i++] = inChar;
   }
 }

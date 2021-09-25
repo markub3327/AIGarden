@@ -11,7 +11,7 @@ class AIGarden:
         self.serialThread.run()
 
         # send IP address
-        self.serialThread.write(f"$IP;{getIPAddress()}")
+        self.serialThread.write(f"$IP;{getIPAddress()}\n")
 
     # Watering
     def watering(self, pump_id, duration, force):

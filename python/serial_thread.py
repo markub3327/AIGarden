@@ -64,7 +64,7 @@ class SerialThread():
                     )
 
             # Automatically sync clock
-            self.write(f"$TIME;{now.day};{now.month};{now.year};{now.hour};{now.minute};{now.second}")
+            self.write(f"$TIME;{now.day};{now.month};{now.year};{now.hour};{now.minute};{now.second}\n")
 
     def run(self):
         # starting thread
