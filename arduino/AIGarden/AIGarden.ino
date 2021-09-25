@@ -35,21 +35,7 @@ union {
 // IP address
 char IPAddr[20];
 
-void scroll() {
-  for (int positionCounter = 0; positionCounter < 40; positionCounter++) 
-  {
-    lcd.setCursor(positionCounter, 0);
-    lcd.print(' ');
- 
-    lcd.setCursor(positionCounter, 1);
-    lcd.print(' ');
-    delay(20);
-  }
-}
-
 void screen0() {
-  scroll();
-
   lcd.setCursor(0, 0);
   lcd.print(F("Temp 0: "));
   lcd.print(temp_0);
@@ -70,8 +56,6 @@ void screen0() {
 }
 
 void screen1() {
-  scroll();
-
   lcd.setCursor(0, 0);
   lcd.print(F("Humidity: "));
   lcd.print(humidity_0);
@@ -84,8 +68,6 @@ void screen1() {
 }
 
 void screen2() {
-  scroll();
-
   lcd.setCursor(0, 0);
   lcd.print(F("Soil 0: "));
   lcd.print(soil_0);
@@ -96,8 +78,6 @@ void screen2() {
 }
 
 void screen3() {
-  scroll();
-
   lcd.setCursor(5, 0);
   lcd.print(time.time_s.day);
   lcd.print('.');
