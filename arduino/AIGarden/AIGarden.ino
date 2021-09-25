@@ -211,6 +211,8 @@ void serialEvent() {
   static char inputString[256];
 
   while (Serial.available()) {
+    char inChar = (char)Serial.read();
+
     if (inChar == '\n') {
       char* substring = strtok(inputString, ";");
       
