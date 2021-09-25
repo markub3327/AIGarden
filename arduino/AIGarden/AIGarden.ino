@@ -19,7 +19,7 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 Screen screen(10000);
 
 // Soil
-int soil_0, soil_1;
+float soil_0, soil_1;
 
 // Serial
 unsigned long Serial_lastTime = 0;
@@ -36,20 +36,14 @@ union {
 char IPAddr[20];
 
 void scroll() {
-  for (int positionCounter = 0; positionCounter < 20; positionCounter++) {
+  for (int positionCounter = 0; positionCounter < 40; positionCounter++) 
+  {
     lcd.setCursor(positionCounter, 0);
     lcd.print(' ');
-
+ 
     lcd.setCursor(positionCounter, 1);
     lcd.print(' ');
-
-    lcd.setCursor(positionCounter, 2);
-    lcd.print(' ');
-
-    lcd.setCursor(positionCounter, 3);
-    lcd.print(' ');
-
-    delay(100);
+    delay(20);
   }
 }
 
@@ -166,13 +160,13 @@ void loop() {
   pressure_0 /= 100.0f;   // convert to hPa
 
   // Read Soil sensors - get mini-batch statistics
-  soil_0 = 0; soil_1 = 0;
+  soil_0 = 0.0; soil_1 = 0.0;
   for (int i = 0; i < 128; i++)
   {
     soil_0 += analogRead(A0);
     soil_1 += analogRead(A1);
   }
-  soil_0 /= 128.0; soil_1 /= 128.0;
+  soil_0 /= 128.0f; soil_1 /= 128.0f;
 
   // Compute heat index in Celsius (isFahreheit = false)
   heat_index = dht.computeHeatIndex((temp_0+temp_1)/2.0, humidity_0, false);
