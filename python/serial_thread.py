@@ -71,7 +71,7 @@ class SerialThread():
         self.thread.start()
     
     def write(self, data):
-        return self.serial_fd.write(data)
+        return self.serial_fd.write(data.encode('ascii'))
 
     def close(self):
         self.done = True

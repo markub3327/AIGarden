@@ -1,7 +1,7 @@
 
 import cv2
 from serial_thread import SerialThread
-from .utils import getIPAddress
+from utils import getIPAddress
 
 class AIGarden:
     def __init__(self):

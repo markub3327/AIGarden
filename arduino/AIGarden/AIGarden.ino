@@ -176,7 +176,7 @@ void loop() {
     // save the last time
     Serial_lastTime = currentTime;
 
-    Serial.print("$READ;")
+    Serial.print("$READ;");
     Serial.print(temp_0);
     Serial.print(';');
     Serial.print(temp_1);
@@ -225,24 +225,24 @@ void serialEvent() {
       // process the command
       if (strstr(inputString, "$TIME") != NULL)
       {
-        char* substring = strtok(input, ";") + 1;
+        char* substring = strtok(inputString, ";") + 1;
         while (substring != 0)
         {
           time.time_a[i++] = atoi(substring);
           // Go to next substring
-          command = strtok(0, ";");
+          substring = strtok(0, ";");
         } 
       }
       else if (strstr(inputString, "$IP") != NULL)
       {
-        char* substring = strtok(input, ";") + 1;
+        char* substring = strtok(inputString, ";") + 1;
         while (substring != 0)
         {
           // save IP
           memcpy(IPAddr, substring, strlen(substring)+1);
 
           // Go to next substring
-          command = strtok(0, ";");
+          substring = strtok(0, ";");
         }        
       }
     }
