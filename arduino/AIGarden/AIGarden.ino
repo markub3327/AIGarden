@@ -24,6 +24,16 @@ int soil_0, soil_1;
 // Serial
 unsigned long Serial_lastTime = 0;
 
+// Time
+union {
+    struct {
+      int day, month, year, hour, minute, second;
+    } time_s;
+    int time_a[6];
+} time;
+
+// IP address
+char IPAddr[20];
 
 void scroll() {
   for (int positionCounter = 0; positionCounter < 20; positionCounter++) {
@@ -63,9 +73,6 @@ void screen0() {
   lcd.print(heat_index);
   lcd.print((char)0xDF);
   lcd.print('C');
-
-  lcd.setCursor(0, 3);
-  lcd.print(F("--------------------"));
 }
 
 void screen1() {
@@ -77,15 +84,9 @@ void screen1() {
   lcd.print('%');
 
   lcd.setCursor(0, 1);
-  lcd.print(F("--------------------"));
-
-  lcd.setCursor(0, 2);
   lcd.print(F("Press 0: "));
   lcd.print(pressure_0);
   lcd.print(F("hPa"));
-
-  lcd.setCursor(0, 3);
-  lcd.print(F("--------------------"));
 }
 
 void screen2() {
@@ -96,14 +97,30 @@ void screen2() {
   lcd.print(soil_0);
 
   lcd.setCursor(0, 1);
-  lcd.print(F("--------------------"));
-
-  lcd.setCursor(0, 2);
   lcd.print(F("Soil 1: "));
   lcd.print(soil_1);
+}
 
-  lcd.setCursor(0, 3);
-  lcd.print(F("--------------------"));
+void screen3() {
+  scroll();
+
+  lcd.setCursor(5, 0);
+  lcd.print(time.time_s.day);
+  lcd.print('.');
+  lcd.print(time.time_s.month);
+  lcd.print('.');
+  lcd.print(time.time_s.year);
+
+  lcd.setCursor(6, 1);
+  lcd.print(time.time_s.hour);
+  lcd.print('.');
+  lcd.print(time.time_s.minute);
+  lcd.print('.');
+  lcd.print(time.time_s.second);
+
+  lcd.setCursor(0, 2);
+  lcd.print(F("IP address: "));
+  lcd.print(IPAddr);
 }
 
 void setup() {
@@ -165,6 +182,7 @@ void loop() {
     // save the last time
     Serial_lastTime = currentTime;
 
+    Serial.print("$READ;")
     Serial.print(temp_0);
     Serial.print(';');
     Serial.print(temp_1);
@@ -192,7 +210,49 @@ void loop() {
   else if (screen.currentScreen == 2)
   {
     screen.run(screen2);
+  }
+  else if (screen.currentScreen == 3)
+  {
+    screen.run(screen3);
   } else {
     screen.currentScreen = 0;
+  }
+}
+
+void serialEvent() {
+  static int i = 0;
+  static char inputString[256];
+
+  while (Serial.available()) {
+    char inChar = (char)Serial.read();
+
+    if (inChar == '\n' || i >= 256) {
+    
+      // process the command
+      if (strstr(inputString, "$TIME") != NULL)
+      {
+        char* substring = strtok(input, ";") + 1;
+        while (substring != 0)
+        {
+          time.time_a[i++] = atoi(substring);
+          // Go to next substring
+          command = strtok(0, ";");
+        } 
+      }
+      else if (strstr(inputString, "$IP") != NULL)
+      {
+        char* substring = strtok(input, ";") + 1;
+        while (substring != 0)
+        {
+          // save IP
+          memcpy(IPAddr, substring, strlen(substring)+1);
+
+          // Go to next substring
+          command = strtok(0, ";");
+        }        
+      }
+    }
+
+    inputString[i++] = inChar;
   }
 }

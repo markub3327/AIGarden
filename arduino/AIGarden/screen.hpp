@@ -14,12 +14,13 @@ class Screen {
     void run(void (*show)()) {  
       unsigned long currentTime = millis();
 
+      // show content
+      show();
+
+      // Go to next screen
       if (currentTime - lastTime >= this->_interval) {
         // save the last time
         lastTime = currentTime;
-
-        // show content
-        show();
 
         this->currentScreen ++;
       }

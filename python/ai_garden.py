@@ -1,6 +1,7 @@
 
 import cv2
 from serial_thread import SerialThread
+from .utils import getIPAddress
 
 class AIGarden:
     def __init__(self):
@@ -8,6 +9,9 @@ class AIGarden:
 
         self.serialThread = SerialThread()
         self.serialThread.run()
+
+        # send IP address
+        self.serialThread.write(f"$IP;{getIPAddress()}")
 
     # Watering
     def watering(self, pump_id, duration, force):
