@@ -41,6 +41,8 @@ class SerialThread:
             "soil_1": 0.0,
         }
 
+        self.ip_addr = getIPAddress()
+
     def fn(self):
         while not self.done:
             # get time of measurement
@@ -71,7 +73,7 @@ class SerialThread:
                     )
 
                     # send IP address
-                    self.write(f"$IP;{getIPAddress()}\n")
+                    self.write(f"$IP;{self.ip_addr}\n")
                 except UnicodeDecodeError:
                     pass
 
@@ -80,7 +82,9 @@ class SerialThread:
         self.thread.start()
 
     def write(self, data):
-        return self.serial_fd.write(data.encode("ascii"))
+        x = self.serial_fd.write(data.encode("ascii"))
+        self.serial_fd.flush()
+        return x
 
     def close(self):
         self.done = True
