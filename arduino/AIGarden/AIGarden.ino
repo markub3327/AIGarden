@@ -35,6 +35,18 @@ union {
 // IP address
 char IPAddr[20];
 
+void scroll() {
+  for (int positionCounter = 0; positionCounter < 40; positionCounter++) 
+  {
+    lcd.setCursor(positionCounter, 0);
+    lcd.print(' ');
+ 
+    lcd.setCursor(positionCounter, 1);
+    lcd.print(' ');
+    delay(20);
+  }
+}
+
 void screen0() {
   lcd.setCursor(0, 0);
   lcd.print(F("Temp 0: "));
@@ -175,19 +187,19 @@ void loop() {
   // Show on screen
   if (screen.currentScreen == 0)
   {
-    screen.run(screen0);
+    screen.run(screen0, scroll);
   }
   else if (screen.currentScreen == 1)
   {
-    screen.run(screen1);
+    screen.run(screen1, scroll);
   }
   else if (screen.currentScreen == 2)
   {
-    screen.run(screen2);
+    screen.run(screen2, scroll);
   }
   else if (screen.currentScreen == 3)
   {
-    screen.run(screen3);
+    screen.run(screen3, scroll);
   } else {
     screen.currentScreen = 0;
   }
