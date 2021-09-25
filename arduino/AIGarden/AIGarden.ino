@@ -226,6 +226,7 @@ void serialEvent() {
         while (substring != 0)
         {
           // save IP
+          memset(IPAddr, 0, sizeof(IPAddr));
           memcpy(IPAddr, substring, strlen(substring));
  
           // Go to next substring
