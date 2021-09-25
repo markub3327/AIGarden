@@ -96,12 +96,12 @@ void screen3() {
 
   lcd.setCursor(6, 1);
   lcd.print(time.time_s.hour);
-  lcd.print('.');
+  lcd.print(':');
   lcd.print(time.time_s.minute);
-  lcd.print('.');
+  lcd.print(':');
   lcd.print(time.time_s.second);
 
-  lcd.setCursor(0, 2);
+  lcd.setCursor(0, 3);
   lcd.print(F("IP: "));
   lcd.print(IPAddr);
 }
