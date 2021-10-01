@@ -56,7 +56,7 @@ class AIGarden:
                 print(f"count: {count}")
                 print(f"boxes.shape[1]: {boxes.shape[1]}")
 
-                for i in range(count):
+                for i in range(count[0]):
                     if scores[0, i] > 0.5:
                         # get unnormalized coordinates
                         x0 = int(boxes[0, i, 1] * img.shape[1])
