@@ -16,13 +16,13 @@ def index():
 @app.route("/video")
 def video():
     return Response(
-        ai_garden.scanPlants, mimetype="multipart/x-mixed-replace; boundary=frame"
+        ai_garden.scanPlants(), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
 
 @app.route("/sensors")
 def sensors():
-    return ai_garden.readSensors
+    return ai_garden.readSensors()
 
 
 if __name__ == "__main__":

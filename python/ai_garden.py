@@ -14,8 +14,6 @@ class AIGarden:
         self._interpreter.allocate_tensors()
         self._input_details = self._interpreter.get_input_details()
         self._output_details = self._interpreter.get_output_details()
-        print(self._input_details)
-        print(self._output_details)
 
         # Load labels
         self._labels = load_labels("models/coco_labels.txt")
