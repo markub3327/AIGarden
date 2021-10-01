@@ -10,7 +10,7 @@ class AIGarden:
         self.cam_0 = cv2.VideoCapture(0)
 
         # TFLite
-        self._interpreter = Interpreter("models/model.tflite")
+        self._interpreter = Interpreter("models/detect.tflite")
         self._interpreter.allocate_tensors()
         self._input_details = self._interpreter.get_input_details()
         self._output_details = self._interpreter.get_output_details()
