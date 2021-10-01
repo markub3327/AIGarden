@@ -44,19 +44,19 @@ class AIGarden:
                 print(img.dtype)
 
                 # set input tensor
-                self._interpreter.set_tensor(self._input_details[0]['index'], img)
+                self._interpreter.set_tensor(self._input_details[0]["index"], img)
 
                 # predict
                 self._interpreter.invoke()
 
                 # get output tensor
-                boxes = self._interpreter.get_tensor(self._output_details[0]['index'])
-                classes = self._interpreter.get_tensor(self._output_details[1]['index'])
-                scores = self._interpreter.get_tensor(self._output_details[2]['index'])
-                count = self._interpreter.get_tensor(self._output_details[3]['index'])
+                boxes = self._interpreter.get_tensor(self._output_details[0]["index"])
+                classes = self._interpreter.get_tensor(self._output_details[1]["index"])
+                scores = self._interpreter.get_tensor(self._output_details[2]["index"])
+                count = self._interpreter.get_tensor(self._output_details[3]["index"])
 
-                print(f'count: {count}')
-                print(f'boxes.shape[1]: {boxes.shape[1]}')
+                print(f"count: {count}")
+                print(f"boxes.shape[1]: {boxes.shape[1]}")
 
                 for i in range(count):
                     if scores[0, i] > 0.5:
@@ -65,7 +65,7 @@ class AIGarden:
                         y0 = int(boxes[0, i, 0] * img.shape[0])
                         x1 = int(boxes[0, i, 3] * img.shape[1])
                         y1 = int(boxes[0, i, 2] * img.shape[0])
-                        print(f'{x0}, {y0}, {x1}, {y1}')
+                        print(f"{x0}, {y0}, {x1}, {y1}")
 
                         cv2.rectangle(img, (x0, y0), (x1, y1), (0, 255, 0), 2)
                         cv2.putText(
@@ -75,7 +75,7 @@ class AIGarden:
                             cv2.FONT_HERSHEY_SIMPLEX,
                             1,
                             (0, 255, 0),
-                            2
+                            2,
                         )
 
                 ret, jpeg = cv2.imencode(".jpg", img)

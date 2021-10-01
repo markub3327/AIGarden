@@ -12,14 +12,16 @@ ai_garden = AIGarden()
 def index():
     return render_template("index.html")
 
+
 @app.route("/video")
-def video_feed():
+def video():
     return Response(
         ai_garden.scanPlants, mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
+
 @app.route("/sensors")
-def video_feed():
+def sensors():
     return ai_garden.readSensors
 
 

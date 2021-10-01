@@ -64,7 +64,7 @@ class SerialThread:
                         self.sensors["soil_1"] = values[7]
 
                         self.log_file.write(
-                            f"{now.strftime('%d.%m.%Y, %H:%M:%S')};{self.sensors['temp_0']};{self.sensors['temp_1']};{self.sensors['heat_index']};{self.sensors['humidity_0']};{self.sensors['pressure_0']};{self.sensors['soil_0']};{self.sensors['soil_1']}\r\n"
+                            f"{now.strftime('%d.%m.%Y, %H:%M:%S')};{self.sensors['temp_0']};{self.sensors['temp_1']};{self.sensors['heat_index']};{self.sensors['humidity_0']};{self.sensors['pressure_0']};{self.sensors['soil_0']};{self.sensors['soil_1']}\r\n"  # noqa
                         )
 
                     # Automatically sync clock
