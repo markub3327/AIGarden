@@ -39,7 +39,6 @@ class AIGarden:
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 img = cv2.resize(img, (300, 300), interpolation=cv2.INTER_AREA)
                 img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
-                print(img.dtype)
 
                 # set input tensor
                 self._interpreter.set_tensor(self._input_details[0]["index"], img)
@@ -56,7 +55,7 @@ class AIGarden:
                 print(f"count: {count}")
                 print(f"boxes.shape[1]: {boxes.shape[1]}")
 
-                for i in range(count[0]):
+                for i in range(int(count[0])):
                     if scores[0, i] > 0.5:
                         # get unnormalized coordinates
                         x0 = int(boxes[0, i, 1] * img.shape[1])
