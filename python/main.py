@@ -33,3 +33,5 @@ if __name__ == "__main__":
 
     # Main process
     app.run(host="0.0.0.0", debug=False)
+
+    ai_garden.close()
