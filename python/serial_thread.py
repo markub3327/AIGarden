@@ -82,9 +82,7 @@ class SerialThread:
         self.thread.start()
 
     def write(self, data):
-        x = self.serial_fd.write(data.encode("ascii"))
-        self.serial_fd.flush()
-        return x
+        return self.serial_fd.write(data.encode("ascii"))
 
     def close(self):
         self.done = True
