@@ -32,11 +32,11 @@ class AIGarden:
     def scanPlants(self):
         while True:
             # Capture image
-            ret, img = self.cam_0.read()
+            ret, img_original = self.cam_0.read()
 
             if ret:
                 # Preprocess the input image
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                img = cv2.cvtColor(img_original, cv2.COLOR_BGR2RGB)
                 img = cv2.resize(img, (300, 300), interpolation=cv2.INTER_AREA)
                 img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
 
@@ -58,15 +58,15 @@ class AIGarden:
                 for i in range(int(count[0])):
                     if scores[0, i] > 0.5:
                         # get unnormalized coordinates
-                        x0 = int(boxes[0, i, 1] * img.shape[1])
-                        y0 = int(boxes[0, i, 0] * img.shape[0])
-                        x1 = int(boxes[0, i, 3] * img.shape[1])
-                        y1 = int(boxes[0, i, 2] * img.shape[0])
+                        x0 = int(boxes[0, i, 1] * img_original.shape[1])
+                        y0 = int(boxes[0, i, 0] * img_original.shape[0])
+                        x1 = int(boxes[0, i, 3] * img_original.shape[1])
+                        y1 = int(boxes[0, i, 2] * img_original.shape[0])
                         print(f"{x0}, {y0}, {x1}, {y1}")
 
-                        cv2.rectangle(img, (x0, y0), (x1, y1), (0, 255, 0), 2)
+                        cv2.rectangle(img_original, (x0, y0), (x1, y1), (0, 255, 0), 2)
                         cv2.putText(
-                            img,
+                            img_original,
                             f"{self._labels[classes[0, i]]}, {scores[0, i]}",
                             (x0, y0),
                             cv2.FONT_HERSHEY_SIMPLEX,
@@ -75,7 +75,7 @@ class AIGarden:
                             2,
                         )
 
-                ret, jpeg = cv2.imencode(".jpg", img)
+                ret, jpeg = cv2.imencode(".jpg", img_original)
                 if ret:
                     yield (
                         b"--frame\r\n"
