@@ -32,11 +32,11 @@ class CameraThread:
     def fn(self):
         while not self.done:
             # Capture image
-            ret, self.image = self.cam_0.read()
+            ret, img_org = self.cam_0.read()
 
             if ret:
                 # Preprocess the input image
-                img = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+                img = cv2.cvtColor(img_org, cv2.COLOR_BGR2RGB)
                 img = cv2.resize(img, (300, 300), interpolation=cv2.INTER_AREA)
                 img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
 
@@ -55,14 +55,14 @@ class CameraThread:
                 for i in range(int(count[0])):
                     if scores[0, i] > 0.5:
                         # get unnormalized coordinates
-                        x0 = int(boxes[0, i, 1] * self.image.shape[1])
-                        y0 = int(boxes[0, i, 0] * self.image.shape[0])
-                        x1 = int(boxes[0, i, 3] * self.image.shape[1])
-                        y1 = int(boxes[0, i, 2] * self.image.shape[0])
+                        x0 = int(boxes[0, i, 1] * img_org.shape[1])
+                        y0 = int(boxes[0, i, 0] * img_org.shape[0])
+                        x1 = int(boxes[0, i, 3] * img_org.shape[1])
+                        y1 = int(boxes[0, i, 2] * img_org.shape[0])
 
-                        cv2.rectangle(self.image, (x0, y0), (x1, y1), (0, 255, 0), 2)
+                        cv2.rectangle(img_org, (x0, y0), (x1, y1), (0, 255, 0), 2)
                         cv2.putText(
-                            self.image,
+                            img_org,
                             f"{self._labels[classes[0, i]]}, {scores[0, i]}",
                             (x0, y0 + 25),
                             cv2.FONT_HERSHEY_SIMPLEX,
@@ -70,6 +70,9 @@ class CameraThread:
                             (0, 255, 0),
                             2,
                         )
+                
+                # save img_org to RAM
+                self.image = img_org
 
     def run(self):
         # starting thread
