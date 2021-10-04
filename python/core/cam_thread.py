@@ -68,7 +68,7 @@ class CameraThread:
                         cv2.rectangle(img_org, (x0, y0), (x1, y1), (0, 0, 255), 2)
                         cv2.putText(
                             img_org,
-                            f"{self._labels[classes[0, i]]}, {scores[0, i]}",
+                            f"{self._labels[int(classes[0, i])]}, {scores[0, i]}",
                             (x0, y0 + 25),
                             cv2.FONT_HERSHEY_SIMPLEX,
                             1,
