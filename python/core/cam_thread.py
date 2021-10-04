@@ -14,8 +14,10 @@ class CameraThread:
     def __init__(self):
         self.done = False
 
-        # Init camera
+        # Init camera - set to 720p
         self.cam_0 = cv2.VideoCapture(0)
+        self.cam_0.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        self.cam_0.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
         # TFLite
         self._interpreter = Interpreter("models/detect.tflite")
@@ -24,7 +26,7 @@ class CameraThread:
         self._output_details = self._interpreter.get_output_details()
 
         # Load labels
-        self._labels = load_labels("models/coco_labels.txt")
+        self._labels = load_labels("models/coco.yaml")
 
         # creating thread
         self.thread = threading.Thread(target=self.fn)  # , args=(10,))
@@ -36,6 +38,9 @@ class CameraThread:
 
             if ret:
                 # Preprocess the input image
+                img_org = cv2.copyMakeBorder(
+                    img_org, 280, 280, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0]
+                )  # zero-padding
                 img = cv2.cvtColor(img_org, cv2.COLOR_BGR2RGB)
                 img = cv2.resize(img, (300, 300), interpolation=cv2.INTER_AREA)
                 img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
@@ -60,17 +65,17 @@ class CameraThread:
                         x1 = int(boxes[0, i, 3] * img_org.shape[1])
                         y1 = int(boxes[0, i, 2] * img_org.shape[0])
 
-                        cv2.rectangle(img_org, (x0, y0), (x1, y1), (0, 255, 0), 2)
+                        cv2.rectangle(img_org, (x0, y0), (x1, y1), (0, 0, 255), 2)
                         cv2.putText(
                             img_org,
                             f"{self._labels[classes[0, i]]}, {scores[0, i]}",
                             (x0, y0 + 25),
                             cv2.FONT_HERSHEY_SIMPLEX,
                             1,
-                            (0, 255, 0),
+                            (0, 0, 255),
                             2,
                         )
-                
+
                 # save img_org to RAM
                 self.image = img_org
 
