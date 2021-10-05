@@ -29,7 +29,7 @@ class CameraThread:
         self._labels = load_labels("models/coco.yaml")
 
         # creating thread
-        self.thread = threading.Thread(target=self.fn)  # , args=(10,))
+        self.thread = threading.Thread(target=self.fn)
 
     def fn(self):
         while not self.done:
@@ -38,10 +38,10 @@ class CameraThread:
 
             if ret:
                 # Preprocess the input image
-                img = cv2.copyMakeBorder(
+                img_org = cv2.copyMakeBorder(
                     img_org, 280, 280, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0]
                 )  # zero-padding
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                img = cv2.cvtColor(img_org, cv2.COLOR_BGR2RGB)
                 img = cv2.resize(img, (300, 300), interpolation=cv2.INTER_AREA)
                 img = img.reshape(1, img.shape[0], img.shape[1], img.shape[2])
 
