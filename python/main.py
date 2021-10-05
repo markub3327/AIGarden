@@ -20,9 +20,9 @@ def video():
     )
 
 
-@app.route("/sensors/<string:sensor_id>")
-def sensors(sensor_id):
-    return ai_garden.readSensors()[sensor_id]
+@app.route("/sensors")
+def sensors():
+    return ai_garden.readSensors()
 
 
 if __name__ == "__main__":
