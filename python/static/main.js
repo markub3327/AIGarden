@@ -1,7 +1,7 @@
 setInterval(function () {
     $.ajax({
         type: "GET",
-        url: "{{ url_for('sensors') }}",
+        url: "/sensors",
     })
     .done(function(data) {
         var tableHtml = '';
