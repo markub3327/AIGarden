@@ -16,8 +16,8 @@ class CameraThread:
 
         # Init camera - set to 720p
         self.cam_0 = cv2.VideoCapture(0)
-        self.cam_0.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-        self.cam_0.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+#        self.cam_0.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+#        self.cam_0.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
         # TFLite
         self._interpreter = Interpreter("models/detect.tflite")
@@ -39,7 +39,7 @@ class CameraThread:
             if ret:
                 # Preprocess the input image
                 img_org = cv2.copyMakeBorder(
-                    img_org, 280, 280, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0]
+                    img_org, 80, 80, 0, 0, cv2.BORDER_CONSTANT, value=[0, 0, 0]
                 )  # zero-padding
                 img = cv2.cvtColor(img_org, cv2.COLOR_BGR2RGB)
                 img = cv2.resize(img, (300, 300), interpolation=cv2.INTER_AREA)
@@ -58,7 +58,7 @@ class CameraThread:
                 count = self._interpreter.get_tensor(self._output_details[3]["index"])
 
                 for i in range(int(count[0])):
-                    if scores[0, i] > 0.5:
+                    if scores[0, i] > 0.6:
                         # get unnormalized coordinates
                         x0 = int(boxes[0, i, 1] * img_org.shape[1])
                         y0 = int(boxes[0, i, 0] * img_org.shape[0])

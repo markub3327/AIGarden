@@ -32,13 +32,13 @@ class SerialThread:
         self.thread = threading.Thread(target=self.fn)  # , args=(10,))
 
         self.sensors = {
-            "temp_0": 0.0,
-            "temp_1": 0.0,
-            "heat_index": 0.0,
-            "humidity_0": 0.0,
-            "pressure_0": 0.0,
-            "soil_0": 0.0,
-            "soil_1": 0.0,
+            "Temp 0": 0.0,
+            "Temp 1": 0.0,
+            "Heat index": 0.0,
+            "Humidity 0": 0.0,
+            "Pressure 0": 0.0,
+            "Soil 0": 0.0,
+            "Soil 1": 0.0,
         }
 
         self.ip_addr = getIPAddress()
@@ -55,17 +55,17 @@ class SerialThread:
                     values = line.split(";")
 
                     if "$READ" in values[0]:
-                        self.sensors["temp_0"] = values[1]
-                        self.sensors["temp_1"] = values[2]
-                        self.sensors["heat_index"] = values[3]
-                        self.sensors["humidity_0"] = values[4]
-                        self.sensors["pressure_0"] = values[5]
-                        self.sensors["soil_0"] = values[6]
-                        self.sensors["soil_1"] = values[7]
+                        self.sensors["Temp 0"] = values[1]
+                        self.sensors["Temp 1"] = values[2]
+                        self.sensors["Heat index"] = values[3]
+                        self.sensors["Humidity 0"] = values[4]
+                        self.sensors["Pressure 0"] = values[5]
+                        self.sensors["Soil 0"] = values[6]
+                        self.sensors["Soil 1"] = values[7]
 
-                        self.log_file.write(
-                            f"{now.strftime('%d.%m.%Y, %H:%M:%S')};{self.sensors['temp_0']};{self.sensors['temp_1']};{self.sensors['heat_index']};{self.sensors['humidity_0']};{self.sensors['pressure_0']};{self.sensors['soil_0']};{self.sensors['soil_1']}\r\n"  # noqa
-                        )
+#                        self.log_file.write(
+#                            f"{now.strftime('%d.%m.%Y, %H:%M:%S')};{self.sensors['temp_0']};{self.sensors['temp_1']};{self.sensors['heat_index']};{self.sensors['humidity_0']};{self.sensors['pressure_0']};{self.sensors['soil_0']};{self.sensors['soil_1']}\r\n"  # noqa
+#                        )
 
                     # Automatically sync clock
                     self.write(

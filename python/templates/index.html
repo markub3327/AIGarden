@@ -10,21 +10,19 @@
 
 <body>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+
 <img class="camera-bg" id="bg" class="center" src="{{ url_for('video') }}">   
 
 <table>
-  <tr>
-    <th>Sensor</th>
-    <th>Value</th>
-  </tr>
-  <tr>
-    <td>Temp 0</td>
-    <td>{{ url_for('sensors') }}</td> 
-  </tr>
-  <tr>
-    <td>Temp 1</td>
-    <td>{{ url_for('sensors') }}</td> 
-  </tr>
+  <thead>
+    <tr>
+      <th>Sensor</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody id="table-sensors"></tbody>
 </table>
 
 </body>

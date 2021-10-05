@@ -20,7 +20,7 @@ def video():
     )
 
 
-@app.route("/sensors")
+@app.route("/sensors", methods=['GET'])
 def sensors():
     return ai_garden.readSensors()
 
