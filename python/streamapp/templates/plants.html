@@ -1,13 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>AIGarden</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-  </head>
+    <script src="{% static 'plants.js' %}"></script>
+</head>
   
   <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -38,24 +42,67 @@
         </div>
       </nav>    
 
-    <div class="container">
-        <table class="table table-bordered table-hover">
-          <thead class="table-success">
-            <tr>
-              <th>Variety</th>
-              <th>Type</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody id="table-sensors"></tbody>
-        </table>
-      </div>    
+    <div class="container-sm mt-3">
+        <div class="row">
+            <div class="col">
+                <table class="table table-bordered table-hover text-center">
+                  <thead class="table-success">
+                    <tr>
+                      <th>Variety</th>
+                      <th>Type</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-plants"></tbody>
+                </table>
+            </div>
 
-    <footer id="about">	
-		<h2>Contact</h2>
-		<p>Author: Bc. Martin Kubovčík</p>	
-		<p>Mail: <a href="mailto:marhor3327gmail.com">marhor3327gmail.com</a></p>
-        <p>GitHub: <a href="https://github.com/markub3327/AIGarden">AIGarden</a></p>
+            <div class="col-auto">
+                <button type="button" class="btn btn-success" onclick="add_plant()">+</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <table class="table table-bordered table-hover text-center">
+                  <thead class="table-success">
+                    <tr>
+                      <th>Type</th>
+                      <th>Duration [minute]</th>
+                      <th>Class</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-desc"></tbody>
+                </table>
+            </div>
+
+            <div class="col-auto">
+                <button type="button" class="btn btn-success" onclick="add_desc()">+</button>
+            </div>
+        </div>
+    </div>    
+
+    <footer class="bg-dark text-center text-white" id="about">
+        <div class="container p-4">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/martin.kubovcik/" role="button">
+                    <i class="fa fa-instagram"></i>
+                </a>
+                <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/markub3327/AIGarden" role="button">
+                    <i class="fa fa-github"></i>
+                </a>
+            </section>
+            <section class="mb-4">
+                <p>
+                    AIGarden 🚰🌱🥕🍅 
+                      is open-source project that is using Arduino and Raspberry Pi to control your garden and simplified caring about the garden. 
+                      You can make watering autonomous and monitoring plants smarter.
+                </p>
+            </section>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright: Bc. Martin Kubovčík
+        </div>
     </footer>
 </body>
 </html>

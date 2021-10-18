@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% load static %}
   <link rel="stylesheet" href="{% static 'style.css' %}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="{% static 'control.js' %}"></script>
@@ -41,30 +42,55 @@
         </div>
     </nav>
     
-  <div class="container">
+  <div class="container-sm mt-3">
     <div class="input-group mb-3">
       <span class="input-group-text">Pump 0</span>
       <input type="text" class="form-control pump-value" value="90">
       <span class="input-group-text">%</span>
-      <button class="btn btn-success" onclick="control_pump(this, 0)" type="button">Run</button>
-      <button class="btn btn-danger" onclick="control_pump(this, 0, val=0)" type="button">Stop</button>
+      <button type="button" class="btn btn-success" onclick="control_pump(this, 0)">Run</button>
+      <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+      <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+        <li><button class="dropdown-item btn-success" type="button" onclick="control_pump(this, 0)">Run</button></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><button class="dropdown-item btn-danger" type="button" onclick="control_pump(this, 0, val=0)">Stop</button></li>
+      </ul>
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text">Pump 1</span>
         <input type="text" class="form-control pump-value" value="90">
         <span class="input-group-text">%</span>
-        <button class="btn btn-success" onclick="control_pump(this, 1)" type="button">Run</button>
-        <button class="btn btn-danger" onclick="control_pump(this, 1, val=0)" type="button">Stop</button>
-      </div>
+        <button type="button" class="btn btn-success" onclick="control_pump(this, 1)">Run</button>
+        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><button class="dropdown-item btn-success" type="button" onclick="control_pump(this, 1)">Run</button></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><button class="dropdown-item btn-danger" type="button" onclick="control_pump(this, 1, val=0)">Stop</button></li>
+        </ul>
+      </div>    
   </div>
 
-  <footer id="about">
-	<h2>Contact</h2>
-	<p>Author: Bc. Martin Kubovčík</p>	
-	<p>Mail: <a href="mailto:marhor3327gmail.com">marhor3327gmail.com</a></p>
-    <p>GitHub: <a href="https://github.com/markub3327/AIGarden">AIGarden</a></p>
-  </footer>
-
+  <footer class="bg-dark text-center text-white" id="about">
+    <div class="container p-4">
+        <section class="mb-4">
+            <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/martin.kubovcik/" role="button">
+                <i class="fa fa-instagram"></i>
+            </a>
+            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/markub3327/AIGarden" role="button">
+                <i class="fa fa-github"></i>
+            </a>
+        </section>
+        <section class="mb-4">
+            <p>
+                AIGarden 🚰🌱🥕🍅 
+                  is open-source project that is using Arduino and Raspberry Pi to control your garden and simplified caring about the garden. 
+                  You can make watering autonomous and monitoring plants smarter.
+            </p>
+        </section>
+    </div>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2021 Copyright: Bc. Martin Kubovčík
+    </div>
+</footer>
 </body>
 </html>
