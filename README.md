@@ -7,6 +7,11 @@
 
 This open-source project is using Arduino and Raspberry Pi to control your garden and simplified caring about the garden. You can make watering autonomous and monitoring plants smarter.
 
+## Testing
+```shell
+docker build -t markub3327/ubuntu-web:latest ./docker
+```
+
 | | |
 |------------------|------------------------------|
 | Operating system | Ubuntu Server 20.04          |
@@ -14,5 +19,5 @@ This open-source project is using Arduino and Raspberry Pi to control your garde
 | Sensors          | DHT22, BMP180, Soil moisture |
 
 
------------------------------------------
-**Frameworks:** Tensorflow, OpenCV, WanDB
+------------------------------------------
+**Frameworks:** Tensorflow, OpenCV, Django

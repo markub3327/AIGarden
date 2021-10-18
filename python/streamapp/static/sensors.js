@@ -1,7 +1,9 @@
-setInterval(function () {
+
+function read_table() {
     $.ajax({
         type: "GET",
-        url: "/sensors",
+        url: "/sensors?read=1",
+        dataType: "json"
     })
     .done(function(data) {
         var tableHtml = '';
@@ -17,4 +19,11 @@ setInterval(function () {
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR, textStatus, errorThrown);
     });
-}, 1000);
+}
+
+
+// On loading page read sensors
+$(document).ready(read_table);
+
+// Periodicaly update table
+setInterval(read_table, 3000);

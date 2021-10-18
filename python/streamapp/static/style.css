@@ -1,0 +1,9 @@
+.camera-bg {
+    display: block;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+
+    width: 50%;
+}
