@@ -8,8 +8,8 @@ tflite_runtime
 opencv-python>=3.
 #
 #
-###### Flask ######
+###### Django ######
 #
-flask
+Django
 #
 #

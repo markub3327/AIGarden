@@ -21,9 +21,15 @@ function read_table() {
     });
 }
 
+function read_params() {
+    
+}
 
 // On loading page read sensors
-$(document).ready(read_table);
+$(document).ready(function () {
+    read_params();
+    read_table();
+});
 
 // Periodicaly update table
-setInterval(read_table, 3000);
+setInterval(read_table, refresh_interval);

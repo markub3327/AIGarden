@@ -5,25 +5,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% load static %}
+  <link rel="icon" type="image/svg" href="{% static 'logo.svg' %}">
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script src="{% static 'sensors.js' %}"></script>  
+  <script type="text/javascript"> 
+    var refresh_interval = "{{ refresh_interval|safe }}";
+  </script> 
+  <script src="{% static 'sensors.js' %}"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Home</a>
+      <img src="{% static 'logo.svg' %}" alt="logo" width="30" height="24">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'sensors' %}">Sensors</a>
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'sensors' %}">Sensors</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'control' %}">Control</a>
@@ -42,7 +49,7 @@
     </div>
   </nav>
 
-  <div class="container-sm mt-3 mb-5">
+  <div class="container mt-3 mb-5">
     <table class="table table-bordered table-hover text-center">
       <thead class="table-danger">
         <tr>
@@ -65,11 +72,8 @@
             </a>
         </section>
         <section class="mb-4">
-            <p>
-                AIGarden 🚰🌱🥕🍅 
-                  is open-source project that is using Arduino and Raspberry Pi to control your garden and simplified caring about the garden. 
-                  You can make watering autonomous and monitoring plants smarter.
-            </p>
+          AIGarden 🚰🌱🥕🍅 is an open-source project that uses Arduino and Raspberry Pi to automate your garden and simplified caring about your garden. 
+          You can make watering autonomous & monitoring plants smarter.        
         </section>
     </div>
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
