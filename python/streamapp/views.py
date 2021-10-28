@@ -48,9 +48,8 @@ def settings(request):
 
         # Delete selected times
         for t in data['del_watering_schedule']:
-            print(t)
-            print(WateringSchedule.objects.filter(time__contains=t).count())
-            WateringSchedule.objects.filter(time__contains=t).delete()
+            _t = datetime.datetime.strptime(t, '%H:%M')
+            WateringSchedule.objects.filter(time__hour=_t.hour, time__minute=_t.minute).delete()
         
         # Add new times
         for t in data['new_watering_schedule']:

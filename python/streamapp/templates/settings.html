@@ -5,19 +5,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% load static %}
-  <link rel="icon" type="image/svg" href="{% static 'logo.svg' %}">
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="icon" type="image/svg" href="{% static 'img/logo.svg' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-  <script src="{% static 'settings.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-      <img src="{% static 'logo.svg' %}" alt="logo" width="30" height="24">
+      <img src="{% static 'img/logo.svg' %}" alt="logo" width="30" height="24">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -65,8 +65,8 @@
 
             <div class="row mb-4">
                 <div class="col">
-                    <label for="timeTable" class="form-label">Plant-Watering Schedule</label>
-                    <table class="table table-hover text-center" id="timeTable">
+                    <table class="table table-hover text-center caption-top" id="timeTable">
+                        <caption>Plant-Watering Schedule</caption>  
                         <thead>
                           <tr class="table-primary">
                             <th>Time</th>

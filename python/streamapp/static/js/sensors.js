@@ -21,13 +21,8 @@ function read_table() {
     });
 }
 
-function read_params() {
-    
-}
-
 // On loading page read sensors
 $(document).ready(function () {
-    read_params();
     read_table();
 });
 

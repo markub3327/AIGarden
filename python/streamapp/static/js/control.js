@@ -10,15 +10,13 @@ function control_pump(obj, id, val=null) {
     // Release button
     obj.blur();
 
-    // Display message
-    document.getElementById('msgResult').innerHTML = "Pump " + id + " is set to " + values['pump-' + id] + " %";
-
     $.ajax({
         type: "POST",
         url: "/control",
         data: JSON.stringify(values),
         success: function () {
-            console.log("POST is successful");
+            // Display message
+            document.getElementById('msgResult').innerHTML = "Pump " + id + " is set to " + values['pump-' + id] + " %";
         },
         error: function(errMsg) {
             console.log(errMsg.status);
