@@ -150,3 +150,5 @@ dataset/
 
 # ignore old versions
 *-old/
+
+models/
