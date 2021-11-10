@@ -1,21 +1,19 @@
 import os
 import numpy as np
 from math import sqrt
-import torch
-from .piplines import LoadImageFromFile, LoadAnnotations, Normalize, DefaultFormatBundle, Collect, TestCollect, Resize, Pad, RandomFlip, MultiScaleFlipAug, ImageToTensor
 
 
-process_funcs_dict = {'LoadImageFromFile':  LoadImageFromFile,
-                      'LoadAnnotations': LoadAnnotations,
-                      'Normalize': Normalize,
-                      'DefaultFormatBundle': DefaultFormatBundle,
-                      'Collect': Collect,
-                      'TestCollect': TestCollect,
-                      'Resize': Resize,
-                      'Pad': Pad,
-                      'RandomFlip': RandomFlip,
-                      'MultiScaleFlipAug': MultiScaleFlipAug,
-                      'ImageToTensor': ImageToTensor}
+#process_funcs_dict = {'LoadImageFromFile':  LoadImageFromFile,
+#                      'LoadAnnotations': LoadAnnotations,
+#                      'Normalize': Normalize,
+#                      'DefaultFormatBundle': DefaultFormatBundle,
+#                      'Collect': Collect,
+#                      'TestCollect': TestCollect,
+#                      'Resize': Resize,
+#                      'Pad': Pad,
+#                      'RandomFlip': RandomFlip,
+#                      'MultiScaleFlipAug': MultiScaleFlipAug,
+#                      'ImageToTensor': ImageToTensor}
 
 COLORS = ((244,  67,  54),
           (233,  30,  99),
