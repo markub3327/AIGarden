@@ -8,3 +8,10 @@ opencv-python>=3.
 Django
 #
 #
+###### PyTorch ######
+#
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+
+torch==1.10.0+cpu
+#
+#
