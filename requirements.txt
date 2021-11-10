@@ -13,3 +13,8 @@ opencv-python>=3.
 Django
 #
 #
+###### COCO dataset ######
+#
+pycocotools
+#
+#
