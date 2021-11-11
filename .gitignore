@@ -146,9 +146,5 @@ wandb/
 # Visual Studio Code
 .vscode/
 
+# ignore dataset
 dataset/
-
-# ignore old versions
-*-old/
-
-models/
