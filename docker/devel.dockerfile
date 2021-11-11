@@ -49,4 +49,4 @@ RUN python3 -m pip install -r requirements.txt --no-cache-dir
 ADD . /code/
 
 COPY docker/config/init.sh /usr/local/bin/
-ENTRYPOINT [ "sh", "init.sh" ]
+ENTRYPOINT [ "sh", "/usr/local/bin/init.sh" ]
