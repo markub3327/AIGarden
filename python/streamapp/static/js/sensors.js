@@ -109,6 +109,130 @@ $(document).ready(function () {
             }
         }
     });
+    myChart_2 = new Chart("myChart_3", {
+        type: "line",
+        data: {
+          datasets: [{
+            fill: false,
+            backgroundColor: "rgba(120,80,0,1)",
+            borderColor: "rgba(120,0,0,0.5)",
+          }]
+        },
+        options: {
+            legend: false,
+            title: {
+                display: true,
+                text: 'Humidity 0'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'humidity [%)]'
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'time'
+                    }
+                }]
+            }
+        }
+    });
+    myChart_2 = new Chart("myChart_4", {
+        type: "line",
+        data: {
+          datasets: [{
+            fill: false,
+            backgroundColor: "rgba(120,80,0,1)",
+            borderColor: "rgba(120,0,0,0.5)",
+          }]
+        },
+        options: {
+            legend: false,
+            title: {
+                display: true,
+                text: 'Pressure 0'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'pressure [hPa]'
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'time'
+                    }
+                }]
+            }
+        }
+    });
+    myChart_2 = new Chart("myChart_5", {
+        type: "line",
+        data: {
+          datasets: [{
+            fill: false,
+            backgroundColor: "rgba(120,80,0,1)",
+            borderColor: "rgba(120,0,0,0.5)",
+          }]
+        },
+        options: {
+            legend: false,
+            title: {
+                display: true,
+                text: 'Soil moisture 0'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'soil moisture [%]'
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'time'
+                    }
+                }]
+            }
+        }
+    });
+    myChart_2 = new Chart("myChart_6", {
+        type: "line",
+        data: {
+          datasets: [{
+            fill: false,
+            backgroundColor: "rgba(120,80,0,1)",
+            borderColor: "rgba(120,0,0,0.5)",
+          }]
+        },
+        options: {
+            legend: false,
+            title: {
+                display: true,
+                text: 'Soil moisture 1'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'soil moisture [%]'
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'time'
+                    }
+                }]
+            }
+        }
+    });
 });
 
 // Periodicaly update table
@@ -119,6 +243,14 @@ setInterval(() => {
 
     chartjs_removeData(myChart_1);
     chartjs_removeData(myChart_2);
+    chartjs_removeData(myChart_3);
+    chartjs_removeData(myChart_4);
+    chartjs_removeData(myChart_5);
+    chartjs_removeData(myChart_6);
     chartjs_addData(myChart_1, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[0][1][0]);
     chartjs_addData(myChart_2, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[1][1][0]);
+    chartjs_addData(myChart_3, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[2][1][0]);
+    chartjs_addData(myChart_4, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[3][1][0]);
+    chartjs_addData(myChart_5, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[4][1][0]);
+    chartjs_addData(myChart_6, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[5][1][0]);
 }, refresh_interval);

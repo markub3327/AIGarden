@@ -40,8 +40,8 @@ def sensors(request):
                 "Heat index": [round(random.random() * 200 - 50), "°C"],
                 "Humidity 0": [round(random.random() * 100), "%"],
                 "Pressure 0": [round(random.random() * 750 + 400), "hPa"],
-                "Soil 0": [round(random.random() * 100), "%"],
-                "Soil 1": [round(random.random() * 100), "%"],
+                "Soil moisture 0": [round(random.random() * 100), "%"],
+                "Soil moisture 1": [round(random.random() * 100), "%"],
             }
         )
     else:
