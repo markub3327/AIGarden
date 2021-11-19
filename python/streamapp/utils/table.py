@@ -2,7 +2,6 @@ class Table:
     def __init__(self, table):
         self._table = table
 
-
     @property
     def name(self):
         return self._table.__name__
@@ -10,7 +9,9 @@ class Table:
     @property
     def thead(self):
         all_fields = self._table._meta.fields
-        return [field.verbose_name for field in all_fields if field.verbose_name != "ID"]
+        return [
+            field.verbose_name for field in all_fields if field.verbose_name != "ID"
+        ]
 
     @property
     def tbody(self):
@@ -24,5 +25,8 @@ class Table:
         return columns
 
     @property
-    def inputTypes(self):
-        return self._table.input_types
+    def inputParams(self):
+        return {
+            "type": self._table.input_types,
+            "required": self._table.input_required,
+        }

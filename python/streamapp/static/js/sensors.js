@@ -16,7 +16,7 @@ function read_table() {
             tableHtml += `
                 <tr>
                     <td>${key}</td>
-                    <td>${value}</td>
+                    <td>${value[0]} ${value[1]}</td>
                 </tr>
             `;
         }
@@ -27,7 +27,7 @@ function read_table() {
 }
 
 function chartjs_removeData(chart) {
-    if (chart.data.labels.length > 10) {
+    if (chart.data.labels.length > 128) {
     chart.data.labels.shift();
     chart.data.datasets.forEach((dataset) => {
         dataset.data.shift();
@@ -119,6 +119,6 @@ setInterval(() => {
 
     chartjs_removeData(myChart_1);
     chartjs_removeData(myChart_2);
-    chartjs_addData(myChart_1, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[0][1]);
-    chartjs_addData(myChart_2, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[1][1]);
+    chartjs_addData(myChart_1, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[0][1][0]);
+    chartjs_addData(myChart_2, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[1][1][0]);
 }, refresh_interval);

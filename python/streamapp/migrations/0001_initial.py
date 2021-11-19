@@ -7,58 +7,120 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='GardenPlan',
+            name="GardenPlan",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('p_type', models.CharField(max_length=20, verbose_name='Type')),
-                ('p_variety', models.CharField(max_length=20, verbose_name='Variety')),
-                ('p_planting_date', models.DateField(verbose_name='Planting (date)')),
-                ('p_location', models.JSONField(verbose_name='Location')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("p_type", models.CharField(max_length=20, verbose_name="Type")),
+                ("p_variety", models.CharField(max_length=20, verbose_name="Variety")),
+                ("p_planting_date", models.DateField(verbose_name="Planting (date)")),
+                ("p_location", models.JSONField(verbose_name="Location")),
             ],
         ),
         migrations.CreateModel(
-            name='Modes',
+            name="Modes",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('mode', models.CharField(max_length=20, verbose_name='Mode')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("mode", models.CharField(max_length=20, verbose_name="Mode")),
             ],
         ),
         migrations.CreateModel(
-            name='PlantSpecification',
+            name="PlantSpecification",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('p_type', models.CharField(max_length=20, verbose_name='Type')),
-                ('p_variety', models.CharField(max_length=20, verbose_name='Variety')),
-                ('p_num_of_seeds_in_1g', models.PositiveIntegerField(verbose_name='Number of seeds in 1g')),
-                ('p_planting_date', models.JSONField(verbose_name='Planting (date)')),
-                ('p_planting_temp', models.JSONField(verbose_name='Planting temperature (°C)')),
-                ('p_planting_depth', models.JSONField(verbose_name='Planting depth (cm)')),
-                ('p_germination_time', models.JSONField(verbose_name='Germination (days)')),
-                ('p_harvest_time', models.JSONField(verbose_name='Harvest (days)')),
-                ('p_harvest_date', models.JSONField(verbose_name='Harvest (date)')),
-                ('p_length_of_root', models.JSONField(verbose_name='Length of root (cm)')),
-                ('p_watering_time', models.TimeField(verbose_name='Watering (time)')),
-                ('p_class', models.CharField(max_length=20, verbose_name='Class')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("p_type", models.CharField(max_length=20, verbose_name="Type")),
+                ("p_variety", models.CharField(max_length=20, verbose_name="Variety")),
+                (
+                    "p_num_of_seeds_in_1g",
+                    models.PositiveIntegerField(verbose_name="Number of seeds in 1g"),
+                ),
+                ("p_planting_date", models.JSONField(verbose_name="Planting (date)")),
+                (
+                    "p_planting_temp",
+                    models.JSONField(verbose_name="Planting temperature (°C)"),
+                ),
+                (
+                    "p_planting_depth",
+                    models.JSONField(verbose_name="Planting depth (cm)"),
+                ),
+                (
+                    "p_germination_time",
+                    models.JSONField(verbose_name="Germination (days)"),
+                ),
+                ("p_harvest_time", models.JSONField(verbose_name="Harvest (days)")),
+                ("p_harvest_date", models.JSONField(verbose_name="Harvest (date)")),
+                (
+                    "p_length_of_root",
+                    models.JSONField(verbose_name="Length of root (cm)"),
+                ),
+                ("p_watering_time", models.TimeField(verbose_name="Watering (time)")),
+                ("p_class", models.CharField(max_length=20, verbose_name="Class")),
             ],
         ),
         migrations.CreateModel(
-            name='Settings',
+            name="Settings",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('selectedMode', models.CharField(max_length=20, verbose_name='Selected mode')),
-                ('refreshInterval', models.PositiveIntegerField(default=1000, verbose_name='Refresh interval')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "selectedMode",
+                    models.CharField(max_length=20, verbose_name="Selected mode"),
+                ),
+                (
+                    "refreshInterval",
+                    models.PositiveIntegerField(
+                        default=1000, verbose_name="Refresh interval"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='WateringSchedule',
+            name="WateringSchedule",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time', models.TimeField(verbose_name='Time')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("time", models.TimeField(verbose_name="Time")),
             ],
         ),
     ]

@@ -23,15 +23,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python3 -m pip install black flake8 isort
+          python3 -m pip install black isort
       - name: Check codestyle
         run: |
           isort --check ./
           black --check ./
-    
-      - name: Lint with flake8
-        run: |
-          flake8 ./ --count --show-source --statistics
   deploy-img:
     name: Deploy image
     #needs: build

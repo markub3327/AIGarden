@@ -55,66 +55,70 @@ class LiveTable
         }
     }
 
-    addRow(e, inputTypes) {
+    addRow(e, inputParams) {
         let table = document.getElementById(this.tableId)
         let tbody = table.getElementsByTagName('tbody')[0];
         let row = tbody.insertRow();
 
         row.innerHTML = '';
-        for (let i = 0; i < inputTypes.length; i++) {
-            switch (inputTypes[i]) {
+        for (let i = 0; i < inputParams['type'].length; i++) {
+            let req = "";
+            if (inputParams['required'][i] == '1')
+                req = "required";
+    
+            switch (inputParams['type'][i]) {
                 case "str":
                     row.innerHTML += `
                         <td>
-                            <input type="text" style="text-align:center; max-width:75px;" required="required">
+                            <input type="text" style="text-align:center; max-width:75px;" ${req}>
                         </td>\n
                     `;
                     break;
                 case "int":
                     row.innerHTML += `
                         <td>
-                            <input type="number" style="text-align:center; max-width:75px;" required="required">
+                            <input type="number" style="text-align:center; max-width:75px;" ${req}>
                         </td>\n
                     `;
                     break;
                 case "time":
                     row.innerHTML += `
                         <td>
-                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" required="required">
+                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" ${req}>
                         </td>\n
                     `;
                     break;
                 case "date":
                     row.innerHTML += `
                         <td>
-                            <input pattern="([1-9]|0[1-9]|[1-2][0-9]|3[0-1])(\\.)(([1-9]|0[1-9])|(1[0-2]))(\\.)\\d{4}" type="text" placeholder="dd.mm.yyyy" style="text-align:center; max-width:100px;" required="required">
+                            <input pattern="([1-9]|0[1-9]|[1-2][0-9]|3[0-1])(\\.)(([1-9]|0[1-9])|(1[0-2]))(\\.)\\d{4}" type="text" placeholder="dd.mm.yyyy" style="text-align:center; max-width:100px;" ${req}>
                         </td>\n
                     `;
                     break;
                 case "range":
                     row.innerHTML += `
                         <td>
-                            <input type="text" style="text-align:center; max-width:75px;" required="required">
+                            <input type="text" style="text-align:center; max-width:75px;" ${req}>
                             -
-                            <input type="text" style="text-align:center; max-width:75px;" required="required">
+                            <input type="text" style="text-align:center; max-width:75px;" ${req}>
                         </td>\n
                     `;
                     break;
                 case "range_month":
                     row.innerHTML += `
                         <td>
-                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" type="text" placeholder="mm" style="text-align:center; max-width:75px;" required="required">
+                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" type="text" placeholder="mm" style="text-align:center; max-width:75px;" ${req}>
                             -
-                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" type="text" placeholder="mm" style="text-align:center; max-width:75px;" required="required">
+                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" type="text" placeholder="mm" style="text-align:center; max-width:75px;" ${req}>
                         </td>\n
                     `;
                     break;
                 case "range_time":
                     row.innerHTML += `
                         <td>
-                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" required="required">
+                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" ${req}>
                             -
-                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" required="required">
+                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" ${req}>
                         </td>\n
                     `;
                     break;    

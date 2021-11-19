@@ -21,32 +21,32 @@
 <body>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-      <img src="{% static 'img/logo.png' %}" alt="logo" width="45" height="45">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'index' %}">Home</a>
+            <a class="nav-link" href="{% url 'index' %}"><img class="rounded" src="{% static 'img/home.png' %}" style="margin: 0px 0px 0px 15px;" alt="Home" width="32" height="32"> Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="{% url 'sensors' %}">Sensors</a>
+            <a class="nav-link active" href="{% url 'sensors' %}"><img class="rounded" src="{% static 'img/sensors.png' %}" alt="Sensors" width="32" height="32"> Sensors</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'control' %}">Control</a>
+            <a class="nav-link" href="{% url 'control' %}"><img class="rounded" src="{% static 'img/control.png' %}" alt="Control" width="32" height="32"> Control</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'plants' %}">Plants</a>
+            <a class="nav-link" href="{% url 'plants' %}"><img class="rounded" src="{% static 'img/plant.png' %}" alt="Plants" width="32" height="32"> Plants</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+            <a class="nav-link" href="{% url 'settings' %}"><img class="rounded" src="{% static 'img/settings.png' %}" alt="Home" width="32" height="32"> Settings</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#about">About</a>
+            <a class="nav-link" href="#about"><img class="rounded" src="{% static 'img/about.png' %}" alt="About" width="32" height="32"> About</a>
           </li>
         </ul>
       </div>
+      <img src="{% static 'img/logo.png' %}" alt="logo" width="40" height="30">
     </div>
   </nav>
 
