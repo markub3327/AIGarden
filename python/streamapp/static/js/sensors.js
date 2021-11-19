@@ -109,7 +109,7 @@ $(document).ready(function () {
             }
         }
     });
-    myChart_2 = new Chart("myChart_3", {
+    myChart_3 = new Chart("myChart_3", {
         type: "line",
         data: {
           datasets: [{
@@ -140,7 +140,7 @@ $(document).ready(function () {
             }
         }
     });
-    myChart_2 = new Chart("myChart_4", {
+    myChart_4 = new Chart("myChart_4", {
         type: "line",
         data: {
           datasets: [{
@@ -171,7 +171,7 @@ $(document).ready(function () {
             }
         }
     });
-    myChart_2 = new Chart("myChart_5", {
+    myChart_5 = new Chart("myChart_5", {
         type: "line",
         data: {
           datasets: [{
@@ -202,7 +202,7 @@ $(document).ready(function () {
             }
         }
     });
-    myChart_2 = new Chart("myChart_6", {
+    myChart_6 = new Chart("myChart_6", {
         type: "line",
         data: {
           datasets: [{
@@ -239,7 +239,6 @@ $(document).ready(function () {
 setInterval(() => {
     read_table();
 
-    var today = new Date();
 
     chartjs_removeData(myChart_1);
     chartjs_removeData(myChart_2);
@@ -247,6 +246,8 @@ setInterval(() => {
     chartjs_removeData(myChart_4);
     chartjs_removeData(myChart_5);
     chartjs_removeData(myChart_6);
+
+    var today = new Date();
     chartjs_addData(myChart_1, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[0][1][0]);
     chartjs_addData(myChart_2, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[1][1][0]);
     chartjs_addData(myChart_3, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[2][1][0]);

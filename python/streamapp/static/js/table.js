@@ -135,8 +135,8 @@ class LiveTable
             let newCells = [];
             for (const cell of row.cells) {
                 // iba nove riadky obsahuju tag "input"
-                content = cell.getElementsByTagName("input");
-                
+                let content = cell.getElementsByTagName("input");
+
                 // ak stlpec obsahuje niekolko vstupov sprav z nich list
                 if (content.length > 1) {
                     let items = [];

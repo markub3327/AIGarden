@@ -49,7 +49,7 @@ class PlantSpecification(models.Model):
     p_harvest_time = models.JSONField(verbose_name="Harvest (days)")
     p_harvest_date = models.JSONField(verbose_name="Harvest (month)")
     p_length_of_root = models.JSONField(verbose_name="Length of root (cm)")
-    p_watering_time = models.TimeField(verbose_name="Watering (time)")
+    p_watering_time = models.TimeField(verbose_name="Watering (duration)")
     p_class = models.CharField(max_length=20, verbose_name="Class")
 
     input_types = [
