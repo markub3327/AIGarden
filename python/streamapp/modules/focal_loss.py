@@ -1,5 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
+#from modules.sigmoid_focal_loss import sigmoid_focal_loss as _sigmoid_focal_loss
 from .utils import weight_reduce_loss
 
 def py_sigmoid_focal_loss(pred,

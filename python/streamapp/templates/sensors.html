@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% load static %}
   <link rel="icon" type="image/svg" href="{% static 'img/logo.svg' %}">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>  
   <script type="text/javascript"> 
     var refresh_interval = "{{ refresh_interval|safe }}";
   </script> 
@@ -50,18 +51,28 @@
   </nav>
 
   <div class="container mt-3 mb-5">
-    <table class="table table-bordered table-hover text-center">
-      <thead class="table-danger">
-        <tr>
-          <th>Sensor</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody id="table-sensors"></tbody>
-    </table>
+    <div class="row mb-3">
+      <div class="col"> 
+        <canvas id="myChart_1" class="canvas-chartjs"></canvas>
+      </div>
+      <div class="col">
+        <canvas id="myChart_2" class="canvas-chartjs"></canvas>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <table class="table table-bordered table-hover text-center">
+        <thead class="table-danger">
+          <tr>
+            <th>Sensor</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="table-sensors"></tbody>
+      </table>
+    </div>
   </div>
 
-  <footer class="bg-dark text-center text-white fixed-bottom" id="about">
+  <footer class="bg-dark text-center text-white" id="about">
     <div class="container p-4">
         <section class="mb-4">
             <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/martin.kubovcik/" role="button">
@@ -76,7 +87,7 @@
           You can make watering autonomous & monitoring plants smarter.        
         </section>
     </div>
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    <div class="text-center p-3 my-footer">
         © 2021 Copyright: Bc. Martin Kubovčík
     </div>
 </footer>

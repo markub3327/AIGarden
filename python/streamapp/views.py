@@ -2,12 +2,13 @@ from typing import Set
 from django.shortcuts import render
 from django.http import JsonResponse, StreamingHttpResponse, HttpResponse
 from django.conf import settings
-from .models import Settings, WateringSchedule, Modes
+
+from .models import Settings, WateringSchedule, GardenPlan, PlantSpecification
 from .utils import config
 from .utils.imgutils import imresize
 from scipy import ndimage
 from .modules.solov2 import SOLOV2
-from .utils.config import cfg
+from .utils import cfg, Table
 
 import numpy as np
 import random
@@ -21,6 +22,7 @@ IMG_FILE = os.path.join(settings.BASE_DIR, 'video.jpg')
 
 # Load model
 model = SOLOV2(cfg, pretrained=os.path.join(settings.BASE_DIR, 'models/solov2_448_r18_epoch_36.pth'), mode='test')
+#model = model.cuda()
 
 def index(request):
     return render(request, 'index.html')
@@ -28,13 +30,13 @@ def index(request):
 def sensors(request):
     if 'read' in request.GET and request.GET['read'] == '1':
         return JsonResponse({
-            "Temp 0": random.random(),
-            "Temp 1": random.random(),
-            "Heat index": random.random(),
-            "Humidity 0": random.random(),
-            "Pressure 0": random.random(),
-            "Soil 0": random.random(),
-            "Soil 1": random.random(),
+            "Temp 0":  round(random.random() * 200 - 50),
+            "Temp 1": round(random.random() * 200 - 50),
+            "Heat index": round(random.random() * 200 - 50),
+            "Humidity 0": round(random.random() * 100),
+            "Pressure 0": round(random.random() * 750 + 400),
+            "Soil 0": round(random.random() * 100),
+            "Soil 1": round(random.random() * 100),
         })
     else:
         return render(request, 'sensors.html', {'refresh_interval': Settings.objects.values_list('refreshInterval', flat=True).last()})
@@ -47,38 +49,74 @@ def control(request):
 def settings(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        
+        print(data)
+
         # delete last settings
         if Settings.objects.count() > 0:
             Settings.objects.all().delete()
 
         # Create row with actual settings
-        Settings.objects.create(selectedMode=data['mode'], refreshInterval=data['refresh_interval'])
+        Settings.objects.create(selectedMode=data['mode'], refreshInterval=data['refreshInterval'])
 
-        # Delete selected times
-        for t in data['del_watering_schedule']:
-            _t = datetime.datetime.strptime(t, '%H:%M')
-            WateringSchedule.objects.filter(time__hour=_t.hour, time__minute=_t.minute).delete()
-            #print(t)
-            #WateringSchedule.objects.filter(time=t).delete()
-        
-        # Add new times
-        for t in data['new_watering_schedule']:
-            WateringSchedule.objects.create(time=datetime.datetime.strptime(t, '%H:%M').time())
+        # Delete selected items
+        for row_id in data[f'del_{WateringSchedule.__name__}']:
+            WateringSchedule.objects.filter(pk=row_id).delete()
+
+        # Add new items
+        for row in data[f'new_{WateringSchedule.__name__}']:
+            WateringSchedule.objects.create(time=datetime.datetime.strptime(row[0], '%H:%M').time())
 
         return HttpResponse(status=204)
     else:
-        return render(request, 'settings.html', {
-            'modes': Modes.objects.values_list('mode', flat=True),
+        return render(request, 'settings.html', context={
+            'modes': ["Automatic", "Manual"],
             'selectedMode': Settings.objects.values_list('selectedMode', flat=True).last(),
-            'refresh_interval': Settings.objects.values_list('refreshInterval', flat=True).last(),
-            'watering_schedule': [t.strftime("%H:%M") for t in WateringSchedule.objects.all().order_by('time__hour').values_list('time', flat=True)]
+            'refreshInterval': Settings.objects.values_list('refreshInterval', flat=True).last(),
+            'wateringSchedule': Table(WateringSchedule)
         })
 
 def plants(request):
     if request.method == 'POST':
-        print(request.body)
-    return render(request, 'plants.html')    
+        data = json.loads(request.body)
+        print(data)
+
+        # Delete selected items
+        for row_id in data[f'del_{GardenPlan.__name__}']:
+            GardenPlan.objects.filter(pk=row_id).delete()
+        for row_id in data[f'del_{PlantSpecification.__name__}']:
+            PlantSpecification.objects.filter(pk=row_id).delete()
+
+        # Add new items
+        for row in data[f'new_{GardenPlan.__name__}']:
+            print(row)
+            GardenPlan.objects.create(
+                p_type=row[0],
+                p_variety=row[1],
+                p_planting_date=datetime.datetime.strptime(row[2], '%d.%m.%Y').date(),
+                p_location=row[3]
+            )
+        for row in data[f'new_{PlantSpecification.__name__}']:
+            PlantSpecification.objects.create(
+                p_type=row[0], 
+                p_variety=row[1], 
+                p_num_of_seeds_in_1g=row[2], 
+                p_planting_date=row[3], 
+                p_planting_temp=row[4], 
+                p_planting_depth=row[5], 
+                p_germination_time=row[6], 
+                p_harvest_time=row[7], 
+                p_harvest_date=row[8], 
+                p_length_of_root=row[9], 
+                p_watering_time=datetime.datetime.strptime(row[10], '%H:%M').time(),
+                p_class=row[11]
+            )
+
+        return HttpResponse(status=204)
+    else:
+        return render(request, 'plants.html', context={
+            'gardenPlan': Table(GardenPlan),
+            'plantSpecification': Table(PlantSpecification),
+        })
 
 def img_generator():
         while True:
@@ -97,6 +135,7 @@ def img_generator():
             img[1, :, :] = (img[1, :, :] - config.MEANS[1]) / config.STD[1]
             img[2, :, :] = (img[2, :, :] - config.MEANS[2]) / config.STD[2]
 
+            #img = torch.from_numpy(img).cuda().unsqueeze(0)
             img = torch.from_numpy(img).unsqueeze(0)
 
             with torch.no_grad():

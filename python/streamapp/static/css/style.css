@@ -1,0 +1,13 @@
+.canvas-chartjs {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cam-stream {
+    width: 70%;
+}
+
+.my-footer {
+    background-color: rgba(0, 0, 0, 0.2);
+}
