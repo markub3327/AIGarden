@@ -250,8 +250,8 @@ setInterval(() => {
     var today = new Date();
     chartjs_addData(myChart_1, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[0][1][0]);
     chartjs_addData(myChart_2, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[1][1][0]);
-    chartjs_addData(myChart_3, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[2][1][0]);
-    chartjs_addData(myChart_4, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[3][1][0]);
-    chartjs_addData(myChart_5, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[4][1][0]);
-    chartjs_addData(myChart_6, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[5][1][0]);
+    chartjs_addData(myChart_3, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[3][1][0]);
+    chartjs_addData(myChart_4, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[4][1][0]);
+    chartjs_addData(myChart_5, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[5][1][0]);
+    chartjs_addData(myChart_6, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), actualData[6][1][0]);
 }, refresh_interval);

@@ -71,7 +71,7 @@
             </li>
           </ul>
         </div>
-        <img src="{% static 'img/logo.png' %}" alt="logo" width="64" height="36">
+        <img src="{% static 'img/logo.png' %}" alt="logo" width="64" height="48">
       </div>
     </nav>  
 
@@ -80,7 +80,7 @@
           <div class="row mb-4">
                 <div class="col">
                   <table class="table table-hover text-center caption-top" id="{{ gardenPlan.name }}">
-                    <caption>Garden Plan</caption>
+                    <caption class="fw-bold">Garden Plan</caption>
                     <thead class="table-success">
                       <tr>
                         {% for column in gardenPlan.thead %}
@@ -113,7 +113,7 @@
           <div class="row mb-4">
             <div class="col">
               <table class="table table-hover text-center caption-top" id="{{ plantSpecification.name }}">
-                <caption>Plant Specification</caption>  
+                <caption class="fw-bold">Plant Specification</caption>  
                 <thead class="table-success">
                   <tr>
                     {% for column in plantSpecification.thead %}
