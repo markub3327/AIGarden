@@ -27,7 +27,7 @@ function read_table() {
 }
 
 function chartjs_removeData(chart) {
-    if (chart.data.labels.length > 128) {
+    if (chart.data.labels.length > 64) {
     chart.data.labels.shift();
     chart.data.datasets.forEach((dataset) => {
         dataset.data.shift();
