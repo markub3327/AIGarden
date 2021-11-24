@@ -6,32 +6,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('streamapp', '0001_initial'),
+        ("streamapp", "0001_initial"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Modes',
+            name="Modes",
         ),
         migrations.AddField(
-            model_name='plantspecification',
-            name='p_diameter',
-            field=models.JSONField(default='', verbose_name='Diameter (cm)'),
+            model_name="plantspecification",
+            name="p_diameter",
+            field=models.JSONField(default="", verbose_name="Diameter (cm)"),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='plantspecification',
-            name='p_harvest_date',
-            field=models.JSONField(verbose_name='Harvest (month)'),
+            model_name="plantspecification",
+            name="p_harvest_date",
+            field=models.JSONField(verbose_name="Harvest (month)"),
         ),
         migrations.AlterField(
-            model_name='plantspecification',
-            name='p_planting_date',
-            field=models.JSONField(verbose_name='Planting (month)'),
+            model_name="plantspecification",
+            name="p_planting_date",
+            field=models.JSONField(verbose_name="Planting (month)"),
         ),
         migrations.AlterField(
-            model_name='plantspecification',
-            name='p_watering_time',
-            field=models.TimeField(verbose_name='Watering (duration)'),
+            model_name="plantspecification",
+            name="p_watering_time",
+            field=models.TimeField(verbose_name="Watering (duration)"),
         ),
     ]

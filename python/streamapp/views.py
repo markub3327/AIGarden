@@ -27,6 +27,7 @@ model = SOLOV2(
 )
 # model = model.cuda()
 
+
 def show_result_ins(img, result, score_thr=0.3, sort_by_density=False):
     h, w, _ = img.shape
 
@@ -87,6 +88,7 @@ def show_result_ins(img, result, score_thr=0.3, sort_by_density=False):
 
     return img
 
+
 ### Make prediction on tested image
 # Preprocess the input image
 img_cam = cv2.imread(IMG_FILE)
@@ -98,7 +100,7 @@ img = img.transpose(2, 0, 1)
 img = img.astype(np.float32)
 
 # Normalization of image
-# 1. step 
+# 1. step
 img = img / 255.0
 # 2. step
 img[0, :, :] = (img[0, :, :] - config.MEAN[0]) / config.STD[0]
@@ -124,6 +126,7 @@ if not None in seg_result:
 img_cam = img_cam[280:-280, :, :]
 ### --------------------------
 
+
 def index(request):
     return render(request, "index.html")
 
@@ -136,7 +139,11 @@ def sensors(request):
                 "Temp 1": [round(random.random() * 200 - 50), "°C", "[-50, 150]"],
                 "Heat index": [round(random.random() * 200 - 50), "°C", "[-50, 150]"],
                 "Humidity 0": [round(random.random() * 100), "%", "[0, 100]"],
-                "Pressure 0": [round(random.random() * 750 + 400), "hPa", "[400, 1150]"],
+                "Pressure 0": [
+                    round(random.random() * 750 + 400),
+                    "hPa",
+                    "[400, 1150]",
+                ],
                 "Soil moisture 0": [round(random.random() * 100), "%", "[0, 100]"],
                 "Soil moisture 1": [round(random.random() * 100), "%", "[0, 100]"],
             }
@@ -252,7 +259,7 @@ def plants(request):
 def img_generator():
     while True:
         ret, jpeg = cv2.imencode(".jpg", img_cam)
-        time.sleep(0.1)   # aby nepretazoval siet
+        time.sleep(0.1)  # aby nepretazoval siet
         yield (
             b"--frame\r\n"
             b"Content-Type: image/jpeg\r\n\r\n" + jpeg.tobytes() + b"\r\n\r\n"

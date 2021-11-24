@@ -16,7 +16,7 @@ class Table:
     @property
     def tbody_sorted(self):
         columns = {}
-        for row in self._table.objects.all().order_by('time__hour'):
+        for row in self._table.objects.all().order_by("time__hour"):
             key, data = row.get_record()
             columns[key] = data
 
