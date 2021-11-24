@@ -30,7 +30,7 @@ jobs:
           black --check ./
   deploy-img:
     name: Deploy image
-    #needs: build
+    needs: build
     runs-on: ubuntu-latest
     
     permissions:

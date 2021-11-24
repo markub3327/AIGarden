@@ -68,7 +68,7 @@ class PlantSpecification(models.Model):
         "time",
         "str",
     ]
-    input_required = [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
+    input_required = [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1]
 
     def get_record(self):
         return self.pk, [

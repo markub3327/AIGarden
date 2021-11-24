@@ -221,7 +221,6 @@ def plants(request):
 
         # Add new items
         for row in data[f"new_{GardenPlan.__name__}"]:
-            print(row)
             GardenPlan.objects.create(
                 p_type=row[0],
                 p_variety=row[1],
@@ -240,8 +239,9 @@ def plants(request):
                 p_harvest_time=row[7],
                 p_harvest_date=row[8],
                 p_length_of_root=row[9],
-                p_watering_time=datetime.datetime.strptime(row[10], "%H:%M").time(),
-                p_class=row[11],
+                p_diameter=row[10],
+                p_watering_time=datetime.datetime.strptime(row[11], "%H:%M").time(),
+                p_class=row[12],
             )
 
         return HttpResponse(status=204)
