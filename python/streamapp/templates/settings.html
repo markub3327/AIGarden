@@ -13,7 +13,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="{% static 'js/table.js' %}"></script>
   <script>
-    {{ wateringSchedule.name }} = new LiveTable("{{ wateringSchedule.name }}", "", "removeButton");
+    {{ wateringSchedule.name }} = new LiveTable("{{ wateringSchedule.name }}", "", "removeButton", {{ wateringSchedule.inputParams|safe }});
 
     function form_save(e, url) {
         let values = {
@@ -103,7 +103,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          {% for key, row in wateringSchedule.tbody.items %}
+                          {% for key, row in wateringSchedule.tbody_sorted.items %}
                             <tr data-id="{{ key|safe }}" onclick="{{ wateringSchedule.name }}.click(event)">
                               {% for column in row %}
                                 <td>{{ column|safe }}</td>
@@ -116,7 +116,7 @@
 
                   <div class="col-auto">
                     <div class="row mb-1">
-                      <button type="button" class="btn btn-success" onclick="{{ wateringSchedule.name }}.addRow(event, {{ wateringSchedule.inputParams }})">+</button>
+                      <button type="button" class="btn btn-success" onclick="{{ wateringSchedule.name }}.addRow(event)">+</button>
                     </div>
                     <div class="row">
                       <button type="button" class="btn btn-danger disabled" id="removeButton" onclick="{{ wateringSchedule.name }}.delRow(event)">-</button>

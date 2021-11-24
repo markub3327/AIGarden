@@ -13,8 +13,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="{% static 'js/table.js' %}"></script>
     <script>
-      {{ gardenPlan.name }} = new LiveTable("{{ gardenPlan.name }}", "", "removeButton_1");
-      {{ plantSpecification.name }} = new LiveTable("{{ plantSpecification.name }}", "", "removeButton_2");
+      {{ gardenPlan.name }} = new LiveTable("{{ gardenPlan.name }}", "", "removeButton_1", {{ gardenPlan.inputParams|safe }});
+      {{ plantSpecification.name }} = new LiveTable("{{ plantSpecification.name }}", "", "removeButton_2", {{ plantSpecification.inputParams|safe }});
 
       function form_save(e, url) {
         let values = {
@@ -102,7 +102,7 @@
 
                 <div class="col-auto">
                   <div class="row mb-1">
-                    <button type="button" class="btn btn-success" onclick="{{ gardenPlan.name }}.addRow(event, {{ gardenPlan.inputParams }})">+</button>
+                    <button type="button" class="btn btn-success" onclick="{{ gardenPlan.name }}.addRow(event)">+</button>
                   </div>
                   <div class="row">
                     <button type="button" class="btn btn-danger disabled" id="removeButton_1" onclick="{{ gardenPlan.name }}.delRow()">-</button>
@@ -135,7 +135,7 @@
 
             <div class="col-auto">
               <div class="row mb-1">
-                <button type="button" class="btn btn-success" onclick="{{ plantSpecification.name }}.addRow(event, {{ plantSpecification.inputParams }})">+</button>
+                <button type="button" class="btn btn-success" onclick="{{ plantSpecification.name }}.addRow(event)">+</button>
               </div>
               <div class="row">
                 <button type="button" class="btn btn-danger disabled" id="removeButton_2" onclick="{{ plantSpecification.name }}.delRow()">-</button>

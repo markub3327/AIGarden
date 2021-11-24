@@ -35,13 +35,13 @@ def sensors(request):
     if "read" in request.GET and request.GET["read"] == "1":
         return JsonResponse(
             {
-                "Temp 0": [round(random.random() * 200 - 50), "°C"],
-                "Temp 1": [round(random.random() * 200 - 50), "°C"],
-                "Heat index": [round(random.random() * 200 - 50), "°C"],
-                "Humidity 0": [round(random.random() * 100), "%"],
-                "Pressure 0": [round(random.random() * 750 + 400), "hPa"],
-                "Soil moisture 0": [round(random.random() * 100), "%"],
-                "Soil moisture 1": [round(random.random() * 100), "%"],
+                "Temp 0": [round(random.random() * 200 - 50), "°C", "[-50, 150]"],
+                "Temp 1": [round(random.random() * 200 - 50), "°C", "[-50, 150]"],
+                "Heat index": [round(random.random() * 200 - 50), "°C", "[-50, 150]"],
+                "Humidity 0": [round(random.random() * 100), "%", "[0, 100]"],
+                "Pressure 0": [round(random.random() * 750 + 400), "hPa", "[400, 1150]"],
+                "Soil moisture 0": [round(random.random() * 100), "%", "[0, 100]"],
+                "Soil moisture 1": [round(random.random() * 100), "%", "[0, 100]"],
             }
         )
     else:
@@ -49,7 +49,7 @@ def sensors(request):
             request,
             "sensors.html",
             {
-                "refresh_interval": Settings.objects.values_list(
+                "refreshInterval": Settings.objects.values_list(
                     "refreshInterval", flat=True
                 ).last()
             },
@@ -164,10 +164,13 @@ def img_generator():
         img = img.transpose(2, 0, 1)
         img = img.astype(np.float32)
 
-        # global standardization of pixels
-        img[0, :, :] = (img[0, :, :] - config.MEANS[0]) / config.STD[0]
-        img[1, :, :] = (img[1, :, :] - config.MEANS[1]) / config.STD[1]
-        img[2, :, :] = (img[2, :, :] - config.MEANS[2]) / config.STD[2]
+        # Normalization of image
+        # 1. step 
+        img = img / 255.0
+        # 2. step
+        img[0, :, :] = (img[0, :, :] - config.MEAN[0]) / config.STD[0]
+        img[1, :, :] = (img[1, :, :] - config.MEAN[1]) / config.STD[1]
+        img[2, :, :] = (img[2, :, :] - config.MEAN[2]) / config.STD[2]
 
         # img = torch.from_numpy(img).cuda().unsqueeze(0)
         img = torch.from_numpy(img).unsqueeze(0)
@@ -183,7 +186,8 @@ def img_generator():
                     }
                 ],
             )
-        img_cam = show_result_ins(img_cam, seg_result)
+        if not None in seg_result:
+            img_cam = show_result_ins(img_cam, seg_result)
         img_cam = img_cam[280:-280, :, :]
 
         ret, jpeg = cv2.imencode(".jpg", img_cam)

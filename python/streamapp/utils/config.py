@@ -33,8 +33,8 @@ COLORS = (
 )
 
 # These are in RGB and are for ImageNet
-MEANS = (123.675, 116.28, 123.675)
-STD = (58.395, 57.12, 58.395)
+MEAN = [0.485, 0.456, 0.406]
+STD = [0.229, 0.224, 0.225]
 
 COCO_LABEL = [
     1,

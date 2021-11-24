@@ -13,7 +13,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>  
   <script type="text/javascript"> 
-    var refresh_interval = "{{ refresh_interval|safe }}";
+    var refreshInterval = "{{ refreshInterval|safe }}";
   </script> 
   <script src="{% static 'js/sensors.js' %}"></script>
 </head>
@@ -53,26 +53,18 @@
   <div class="container mt-3 mb-5">
     <div class="row mb-3">
       <div class="col"> 
-        <canvas id="myChart_1" class="canvas-chartjs"></canvas>
+        <canvas id="myChart_temp" class="canvas-chartjs"></canvas>
       </div>
       <div class="col">
-        <canvas id="myChart_2" class="canvas-chartjs"></canvas>
+        <canvas id="myChart_press" class="canvas-chartjs"></canvas>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col"> 
-        <canvas id="myChart_3" class="canvas-chartjs"></canvas>
+        <canvas id="myChart_humid" class="canvas-chartjs"></canvas>
       </div>
       <div class="col">
-        <canvas id="myChart_4" class="canvas-chartjs"></canvas>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col"> 
-        <canvas id="myChart_5" class="canvas-chartjs"></canvas>
-      </div>
-      <div class="col">
-        <canvas id="myChart_6" class="canvas-chartjs"></canvas>
+        <canvas id="myChart_soil" class="canvas-chartjs"></canvas>
       </div>
     </div>
     <div class="row mb-4">
@@ -81,6 +73,7 @@
           <tr>
             <th>Sensor</th>
             <th>Value</th>
+            <th>Range</th>
           </tr>
         </thead>
         <tbody id="table-sensors"></tbody>

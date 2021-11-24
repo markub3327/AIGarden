@@ -12,7 +12,7 @@ class WateringSchedule(models.Model):
     time = models.TimeField(verbose_name="Time")
 
     input_types = ["time"]
-    input_required = ["1"]
+    input_required = [1]
 
     def get_record(self):
         return self.pk, [self.time.strftime("%H:%M:%S")]
@@ -25,7 +25,7 @@ class GardenPlan(models.Model):
     p_location = models.JSONField(verbose_name="Location")
 
     input_types = ["str", "str", "date", "str"]
-    input_required = ["1", "1", "1", "0"]
+    input_required = [1, 1, 1, 1]
 
     def get_record(self):
         return self.pk, [
@@ -49,6 +49,7 @@ class PlantSpecification(models.Model):
     p_harvest_time = models.JSONField(verbose_name="Harvest (days)")
     p_harvest_date = models.JSONField(verbose_name="Harvest (month)")
     p_length_of_root = models.JSONField(verbose_name="Length of root (cm)")
+    p_diameter = models.JSONField(verbose_name="Diameter (cm)")
     p_watering_time = models.TimeField(verbose_name="Watering (duration)")
     p_class = models.CharField(max_length=20, verbose_name="Class")
 
@@ -63,10 +64,11 @@ class PlantSpecification(models.Model):
         "range",
         "range_month",
         "range",
+        "range",
         "time",
         "str",
     ]
-    input_required = ["1", "1", "0", "1", "1", "1", "1", "1", "1", "0", "1", "1"]
+    input_required = [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]
 
     def get_record(self):
         return self.pk, [
@@ -80,6 +82,7 @@ class PlantSpecification(models.Model):
             self.p_harvest_time,
             self.p_harvest_date,
             self.p_length_of_root,
+            self.p_diameter,
             self.p_watering_time.strftime("%H:%M:%S"),
             self.p_class,
         ]
