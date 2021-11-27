@@ -9,11 +9,12 @@ function read_table() {
         dataType: "json"
     })
     .done(function(data) {
-        var tableHtml = '';
+        let tbody = document.getElementById("table-sensor");
+        tbody.innerHTML = '';
 
         actualData = Object.entries(data);
         for (const [key, value] of actualData) {
-            tableHtml += `
+            tbody.innerHTML += `
                 <tr>
                     <td>${key}</td>
                     <td>${value[0]} ${value[1]}</td>
@@ -21,7 +22,19 @@ function read_table() {
                 </tr>
             `;
         }
-        $("#table-sensors").html(tableHtml)
+        
+        // Firstly clean the graph 
+        chartjs_removeData(myChart_temp);
+        chartjs_removeData(myChart_humid);
+        chartjs_removeData(myChart_press);
+        chartjs_removeData(myChart_soil);
+
+        // Store new measurements
+        var today = new Date();
+        chartjs_addData(myChart_temp, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[0][1][0], actualData[1][1][0]]);
+        chartjs_addData(myChart_humid, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[3][1][0]]);
+        chartjs_addData(myChart_press, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[4][1][0]]);
+        chartjs_addData(myChart_soil, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[5][1][0], actualData[6][1][0]]);
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR, textStatus, errorThrown);
     });
@@ -47,8 +60,6 @@ function chartjs_addData(chart, label, data) {
 
 // On loading page read sensors
 $(document).ready(function () {
-    read_table();
-
     myChart_temp = new Chart("myChart_temp", {
         type: "line",
         data: {
@@ -68,19 +79,34 @@ $(document).ready(function () {
         options: {
             title: {
                 display: true,
-                text: 'Temperature'
+                text: 'Temperature',
+                fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            },
+            legend: {
+                display: true,
+                labels: {
+                    fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                }
             },
             scales: {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'temperature [°C]'
+                        labelString: 'temperature [°C]',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }],
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'time'
+                        labelString: 'time',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }]
             }
@@ -99,19 +125,34 @@ $(document).ready(function () {
         options: {
             title: {
                 display: true,
-                text: 'Humidity'
+                text: 'Humidity',
+                fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            },
+            legend: {
+                display: true,
+                labels: {
+                    fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                }
             },
             scales: {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'humidity [%)]'
+                        labelString: 'humidity [%]',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }],
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'time'
+                        labelString: 'time',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }]
             }
@@ -130,19 +171,34 @@ $(document).ready(function () {
         options: {
             title: {
                 display: true,
-                text: 'Pressure'
+                text: 'Pressure',
+                fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            },
+            legend: {
+                display: true,
+                labels: {
+                    fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                }
             },
             scales: {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'pressure [hPa]'
+                        labelString: 'pressure [hPa]',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }],
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'time'
+                        labelString: 'time',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }]
             }
@@ -167,38 +223,43 @@ $(document).ready(function () {
         options: {
             title: {
                 display: true,
-                text: 'Soil moisture'
+                text: 'Soil moisture',
+                fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            },
+            legend: {
+                display: true,
+                labels: {
+                    fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                }
             },
             scales: {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'soil moisture [%]'
+                        labelString: 'soil moisture [%]',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }],
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'time'
+                        labelString: 'time',
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    },
+                    ticks: {
+                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     }
                 }]
             }
         }
     });
+
+    // Get data into graphs and table
+    read_table();
 });
 
 // Periodicaly update table
-setInterval(() => {
-    read_table();
-
-    chartjs_removeData(myChart_temp);
-    chartjs_removeData(myChart_humid);
-    chartjs_removeData(myChart_press);
-    chartjs_removeData(myChart_soil);
-
-    var today = new Date();
-    chartjs_addData(myChart_temp, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[0][1][0], actualData[1][1][0]]);
-    chartjs_addData(myChart_humid, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[3][1][0]]);
-    chartjs_addData(myChart_press, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[4][1][0]]);
-    chartjs_addData(myChart_soil, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[5][1][0], actualData[6][1][0]]);
-}, refreshInterval);
+setInterval(() => read_table(), refreshInterval);

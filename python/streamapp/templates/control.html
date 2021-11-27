@@ -23,7 +23,7 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'index' %}"><img class="rounded" src="{% static 'img/home.png' %}" style="margin: 0px 0px 0px 15px;" alt="Home" width="32" height="32"> Home</a>
+            <a class="nav-link" href="{% url 'index' %}"><img class="rounded" src="{% static 'img/home.png' %}" alt="Home" width="32" height="32"> Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'sensors' %}"><img class="rounded" src="{% static 'img/sensors.png' %}" alt="Sensors" width="32" height="32"> Sensors</a>
@@ -42,7 +42,7 @@
           </li>
         </ul>
       </div>
-      <img src="{% static 'img/logo.png' %}" alt="logo" width="64" height="48">
+      <img class="rounded" src="{% static 'img/logo.png' %}" alt="logo" width="64" height="48">
     </div>
   </nav>
   <div class="container mt-3">
@@ -52,12 +52,10 @@
           <span class="input-group-text">Pump 0</span>
           <input type="text" class="form-control pump-value" value="90">
           <span class="input-group-text">%</span>
-          <button type="button" class="btn btn-success" onclick="control_pump(this, 0)">Run</button>
-          <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <button type="button" class="btn btn-run" onclick="control_pump(this, 0)">Run</button>
+          <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-            <li><button class="dropdown-item btn-success" type="button" onclick="control_pump(this, 0)">Run</button></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button class="dropdown-item btn-danger" type="button" onclick="control_pump(this, 0, val=0)">Stop</button></li>
+            <li><button class="dropdown-item btn-stop" type="button" onclick="control_pump(this, 0, val=0)">Stop</button></li>
           </ul>
         </div>
       </div>
@@ -69,12 +67,10 @@
           <span class="input-group-text">Pump 1</span>
           <input type="text" class="form-control pump-value" value="90">
           <span class="input-group-text">%</span>
-          <button type="button" class="btn btn-success" onclick="control_pump(this, 1)">Run</button>
-          <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><button class="dropdown-item btn-success" type="button" onclick="control_pump(this, 1)">Run</button></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><button class="dropdown-item btn-danger" type="button" onclick="control_pump(this, 1, val=0)">Stop</button></li>
+          <button type="button" class="btn btn-run" onclick="control_pump(this, 1)">Run</button>
+          <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></button>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+            <li><button class="dropdown-item btn-stop" type="button" onclick="control_pump(this, 1, val=0)">Stop</button></li>
           </ul>
         </div>
       </div>
@@ -99,7 +95,7 @@
         </section>
         <section class="mb-4">
           AIGarden 🚰🌱🥕🍅 is an open-source project that uses Arduino and Raspberry Pi to automate your garden and simplified caring about your garden. 
-          You can make watering autonomous & monitoring plants smarter.        
+          You can make watering autonomous and monitoring plants smarter.        
         </section>
     </div>
     <div class="text-center p-3 my-footer">

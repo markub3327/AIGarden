@@ -52,7 +52,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'index' %}"><img class="rounded" src="{% static 'img/home.png' %}" style="margin: 0px 0px 0px 15px;" alt="Home" width="32" height="32"> Home</a>
+              <a class="nav-link" href="{% url 'index' %}"><img class="rounded" src="{% static 'img/home.png' %}" alt="Home" width="32" height="32"> Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'sensors' %}"><img class="rounded" src="{% static 'img/sensors.png' %}" alt="Sensors" width="32" height="32"> Sensors</a>
@@ -71,7 +71,7 @@
             </li>
           </ul>
         </div>
-        <img src="{% static 'img/logo.png' %}" alt="logo" width="64" height="48">
+        <img class="rounded" src="{% static 'img/logo.png' %}" alt="logo" width="64" height="48">
       </div>
     </nav>  
 
@@ -81,7 +81,7 @@
                 <div class="col">
                   <table class="table table-hover text-center caption-top" id="{{ gardenPlan.name }}">
                     <caption class="fw-bold">Garden Plan</caption>
-                    <thead class="table-success">
+                    <thead class="table-plant">
                       <tr>
                         {% for column in gardenPlan.thead %}
                           <th>{{ column|safe }}</th>
@@ -114,7 +114,7 @@
             <div class="col">
               <table class="table table-hover text-center caption-top" id="{{ plantSpecification.name }}">
                 <caption class="fw-bold">Plant Specification</caption>  
-                <thead class="table-success">
+                <thead class="table-plant">
                   <tr>
                     {% for column in plantSpecification.thead %}
                       <th>{{ column|safe }}</th>
@@ -161,7 +161,7 @@
             </section>
             <section class="mb-4">
                 AIGarden 🚰🌱🥕🍅 is an open-source project that uses Arduino and Raspberry Pi to automate your garden and simplified caring about your garden. 
-                You can make watering autonomous & monitoring plants smarter.        
+                You can make watering autonomous and monitoring plants smarter.        
             </section>
         </div>
         <div class="text-center p-3 my-footer">
