@@ -1,0 +1,17 @@
+@media print {
+    @page {
+        margin: 2cm;
+    }
+
+    nav, footer {
+        display: none !important;
+    }
+
+    table, img, canvas {
+        break-inside: avoid;
+    }
+
+    h1 {
+        break-before: always;
+    }
+}
