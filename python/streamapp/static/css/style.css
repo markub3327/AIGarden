@@ -13,7 +13,7 @@ body {
 }
 
 .cam-stream {
-    width: 75%;
+    max-width: 85%;
 }
 
 .my-footer {
@@ -100,4 +100,8 @@ nav .nav-link:hover {
     --bs-table-active-bg: #dee2e6;
     --bs-table-hover-color: #212529;
     --bs-table-hover-bg: #dee2e6;
+}
+
+.row-border {
+    border: 1px #212529 solid;
 }
