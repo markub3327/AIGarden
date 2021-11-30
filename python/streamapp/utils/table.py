@@ -32,8 +32,5 @@ class Table:
         return columns
 
     @property
-    def inputParams(self):
-        return {
-            "type": self._table.input_types,
-            "required": self._table.input_required,
-        }
+    def inputFields(self):
+        return self._table.inputFields

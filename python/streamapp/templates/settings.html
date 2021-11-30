@@ -14,7 +14,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="{% static 'js/table.js' %}"></script>
   <script>
-    {{ wateringSchedule.name }} = new LiveTable("{{ wateringSchedule.name }}", "", "removeButton", {{ wateringSchedule.inputParams|safe }});
+    {{ wateringSchedule.name }} = new LiveTable("{{ wateringSchedule.name }}", "", "removeButton", {{ wateringSchedule.inputFields|safe }});
 
     function form_save(e, url) {
         let values = {
@@ -80,7 +80,7 @@
     </div>
   </nav>
 
-    <div class="container mt-3">
+  <div class="container-fluid mt-3">
         <form onsubmit="form_save(event, '{% url 'settings' %}')">
             <div class="mb-3">
                 <label for="modeSelect" class="form-label fw-bold">Mode</label>
@@ -91,14 +91,16 @@
                 </select>
             </div>
 
-            <label for="intervalInput" class="form-label fw-bold">Refresh interval</label>
-            <div class="input-group mb-5">
-                <input type="text" class="form-control" id="intervalInput" value="{{ refreshInterval|safe }}">
-                <span class="input-group-text">seconds</span>
+            <div class="mb-3">
+              <label for="intervalInput" class="form-label fw-bold">Refresh interval</label>
+              <div class="input-group">
+                  <input type="text" class="form-control" id="intervalInput" value="{{ refreshInterval|safe }}">
+                  <span class="input-group-text">seconds</span>
+              </div>
             </div>
 
-            <div class="row mb-4">
-                <div class="col">
+            <div class="mb-3">
+              <div class="table-responsive">
                     <table class="table table-hover text-center caption-top" id="{{ wateringSchedule.name }}">
                         <caption class="fw-bold">Plant-Watering Schedule</caption>  
                         <thead class="table-config">
@@ -118,23 +120,17 @@
                           {% endfor %}
                         </tbody>
                     </table>
-                </div>
+              </div>
 
-                  <div class="col-auto">
-                    <div class="row mb-1">
-                      <button type="button" class="btn btn-success" onclick="{{ wateringSchedule.name }}.addRow(event)">+</button>
-                    </div>
-                    <div class="row">
-                      <button type="button" class="btn btn-danger disabled" id="removeButton" onclick="{{ wateringSchedule.name }}.delRow(event)">-</button>
-                    </div>
-                  </div>
+              <button type="button" class="btn btn-success" onclick="{{ wateringSchedule.name }}.addRow(event)">+</button>
+              <button type="button" class="btn btn-danger disabled" id="removeButton" onclick="{{ wateringSchedule.name }}.delRow(event)">-</button>
             </div>
 
             <div class="text-center mb-5">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>
         </form>
-    </div>
+  </div>
 
     <footer class="bg-dark text-center text-white" id="about">
         <div class="container p-4">

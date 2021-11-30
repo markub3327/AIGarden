@@ -224,7 +224,7 @@ def plants(request):
             GardenPlan.objects.create(
                 p_type=row[0],
                 p_variety=row[1],
-                p_planting_date=datetime.datetime.strptime(row[2], "%d.%m.%Y").date(),
+                p_planting_date=datetime.datetime.strptime(row[2], "%Y-%m-%d").date(),
                 p_location=row[3],
             )
         for row in data[f"new_{PlantSpecification.__name__}"]:

@@ -11,11 +11,10 @@ class Settings(models.Model):
 class WateringSchedule(models.Model):
     time = models.TimeField(verbose_name="Time")
 
-    input_types = ["time"]
-    input_required = [1]
+    inputFields = [{"type": "time", "attribute": "required"}]
 
     def get_record(self):
-        return self.pk, [self.time.strftime("%H:%M:%S")]
+        return self.pk, [self.time.strftime("%H:%M")]
 
 
 class GardenPlan(models.Model):
@@ -24,8 +23,12 @@ class GardenPlan(models.Model):
     p_planting_date = models.DateField(verbose_name="Planting (date)")
     p_location = models.JSONField(verbose_name="Location")
 
-    input_types = ["str", "str", "date", "str"]
-    input_required = [1, 1, 1, 1]
+    inputFields = [
+        {"type": "text", "attribute": "required"},
+        {"type": "text", "attribute": "required"},
+        {"type": "date", "attribute": "required"},
+        {"type": "text", "attribute": "required"},
+    ]
 
     def get_record(self):
         return self.pk, [
@@ -53,22 +56,21 @@ class PlantSpecification(models.Model):
     p_watering_time = models.TimeField(verbose_name="Watering (duration)")
     p_class = models.CharField(max_length=20, verbose_name="Class")
 
-    input_types = [
-        "str",
-        "str",
-        "int",
-        "range_month",
-        "range",
-        "range",
-        "range",
-        "range",
-        "range_month",
-        "range",
-        "range",
-        "time",
-        "str",
+    inputFields = [
+        {"type": "text", "attribute": "required"},
+        {"type": "text", "attribute": "required"},
+        {"type": "number", "attribute": ""},
+        {"type": "range_month", "attribute": "required"},
+        {"type": "range_number", "attribute": "required"},
+        {"type": "range_number", "attribute": "required"},
+        {"type": "range_number", "attribute": "required"},
+        {"type": "range_number", "attribute": "required"},
+        {"type": "range_month", "attribute": "required"},
+        {"type": "range_number", "attribute": ""},
+        {"type": "range_number", "attribute": ""},
+        {"type": "time", "attribute": "required"},
+        {"type": "text", "attribute": "required"},
     ]
-    input_required = [1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1]
 
     def get_record(self):
         return self.pk, [
@@ -83,6 +85,6 @@ class PlantSpecification(models.Model):
             self.p_harvest_date,
             self.p_length_of_root,
             self.p_diameter,
-            self.p_watering_time.strftime("%H:%M:%S"),
+            self.p_watering_time.strftime("%H:%M"),
             self.p_class,
         ]

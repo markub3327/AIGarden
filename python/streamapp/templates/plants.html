@@ -14,8 +14,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="{% static 'js/table.js' %}"></script>
     <script>
-      {{ gardenPlan.name }} = new LiveTable("{{ gardenPlan.name }}", "", "removeButton_1", {{ gardenPlan.inputParams|safe }});
-      {{ plantSpecification.name }} = new LiveTable("{{ plantSpecification.name }}", "", "removeButton_2", {{ plantSpecification.inputParams|safe }});
+      {{ gardenPlan.name }} = new LiveTable("{{ gardenPlan.name }}", "", "removeButton_1", {{ gardenPlan.inputFields|safe }});
+      {{ plantSpecification.name }} = new LiveTable("{{ plantSpecification.name }}", "", "removeButton_2", {{ plantSpecification.inputFields|safe }});
 
       function form_save(e, url) {
         let values = {
@@ -81,10 +81,10 @@
       </div>
     </nav>  
 
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
       <form onsubmit="form_save(event, '{% url 'plants' %}')">
-          <div class="row mb-4">
-                <div class="col">
+          <div class="mb-3">
+            <div class="table-responsive">
                   <table class="table table-hover text-center caption-top" id="{{ gardenPlan.name }}">
                     <caption class="fw-bold">Garden Plan</caption>
                     <thead class="table-plant">
@@ -104,49 +104,37 @@
                       {% endfor %}
                     </tbody>
                   </table>
-                </div>
+            </div>
 
-                <div class="col-auto">
-                  <div class="row mb-1">
-                    <button type="button" class="btn btn-success" onclick="{{ gardenPlan.name }}.addRow(event)">+</button>
-                  </div>
-                  <div class="row">
-                    <button type="button" class="btn btn-danger disabled" id="removeButton_1" onclick="{{ gardenPlan.name }}.delRow()">-</button>
-                  </div>
-                </div>
+            <button type="button" class="btn btn-success" onclick="{{ gardenPlan.name }}.addRow(event)">+</button>
+            <button type="button" class="btn btn-danger disabled" id="removeButton_1" onclick="{{ gardenPlan.name }}.delRow()">-</button>
           </div>
 
-          <div class="row mb-4">
-            <div class="col">
+          <div class="mb-3">
+            <div class="table-responsive">
               <table class="table table-hover text-center caption-top" id="{{ plantSpecification.name }}">
-                <caption class="fw-bold">Plant Specification</caption>  
-                <thead class="table-plant">
-                  <tr>
-                    {% for column in plantSpecification.thead %}
-                      <th>{{ column|safe }}</th>
-                    {% endfor %}
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for key, row in plantSpecification.tbody.items %}
-                    <tr data-id="{{ key|safe }}" onclick="{{ plantSpecification.name }}.click(event)">
-                      {% for column in row %}
-                        <td>{{ column|safe }}</td>
+                  <caption class="fw-bold">Plant Specification</caption>
+                  <thead class="table-plant">
+                    <tr>
+                      {% for column in plantSpecification.thead %}
+                        <th>{{ column|safe }}</th>
                       {% endfor %}
                     </tr>
-                  {% endfor %}
-                </tbody>
+                  </thead>
+                  <tbody>
+                    {% for key, row in plantSpecification.tbody.items %}
+                      <tr data-id="{{ key|safe }}" onclick="{{ plantSpecification.name }}.click(event)">
+                        {% for column in row %}
+                          <td>{{ column|safe }}</td>
+                        {% endfor %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
               </table>
             </div>
 
-            <div class="col-auto">
-              <div class="row mb-1">
-                <button type="button" class="btn btn-success" onclick="{{ plantSpecification.name }}.addRow(event)">+</button>
-              </div>
-              <div class="row">
-                <button type="button" class="btn btn-danger disabled" id="removeButton_2" onclick="{{ plantSpecification.name }}.delRow()">-</button>
-              </div>
-            </div>
+            <button type="button" class="btn btn-success" onclick="{{ plantSpecification.name }}.addRow(event)">+</button>
+            <button type="button" class="btn btn-danger disabled" id="removeButton_2" onclick="{{ plantSpecification.name }}.delRow()">-</button>
           </div>
       
           <div class="text-center mb-5">

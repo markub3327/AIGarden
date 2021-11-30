@@ -1,7 +1,7 @@
 class LiveTable
 {
-    constructor(tableId, add_id, remove_id, params) {
-        this.params = params;
+    constructor(tableId, add_id, remove_id, input_fields) {
+        this.input_fields = input_fields;
         this.activeRow = [];
         this.delRows = [];
 
@@ -60,74 +60,35 @@ class LiveTable
         let table = document.getElementById(this.tableId)
         let tbody = table.getElementsByTagName('tbody')[0];
         let row = tbody.insertRow();
-        let attrs;
 
         row.innerHTML = '';
-        for (let i = 0; i < this.params.type.length; i++) {
-            // clear attributes 
-            attrs = "";
-
-            // set attributes
-            if (this.params.required[i])
-                attrs += "required";
-    
-            // select '<input>'
-            switch (this.params.type[i]) {
-                case "str":
+        for (let i = 0; i < this.input_fields.length; i++) {    
+            switch (this.input_fields[i].type) {
+                case "range_number":
                     row.innerHTML += `
                         <td>
-                            <input type="text" style="text-align:center; max-width:75px;" ${attrs}>
-                        </td>\n
-                    `;
-                    break;
-                case "int":
-                    row.innerHTML += `
-                        <td>
-                            <input type="number" style="text-align:center; max-width:75px;" ${attrs}>
-                        </td>\n
-                    `;
-                    break;
-                case "time":
-                    row.innerHTML += `
-                        <td>
-                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" ${attrs}>
-                        </td>\n
-                    `;
-                    break;
-                case "date":
-                    row.innerHTML += `
-                        <td>
-                            <input pattern="([1-9]|0[1-9]|[1-2][0-9]|3[0-1])(\\.)(([1-9]|0[1-9])|(1[0-2]))(\\.)\\d{4}" type="text" placeholder="dd.mm.yyyy" style="text-align:center; max-width:100px;" ${attrs}>
-                        </td>\n
-                    `;
-                    break;
-                case "range":
-                    row.innerHTML += `
-                        <td>
-                            <input type="text" style="text-align:center; max-width:75px;" ${attrs}>
+                            <input class="text-center col-12" type="number" ${this.input_fields[i].attribute}>
                             -
-                            <input type="text" style="text-align:center; max-width:75px;" ${attrs}>
+                            <input class="text-center col-12" type="number" ${this.input_fields[i].attribute}>
                         </td>\n
                     `;
                     break;
                 case "range_month":
                     row.innerHTML += `
                         <td>
-                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" type="text" placeholder="mm" style="text-align:center; max-width:75px;" ${attrs}>
+                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" class="text-center col-12" type="number" placeholder="mm" ${this.input_fields[i].attribute}>
                             -
-                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" type="text" placeholder="mm" style="text-align:center; max-width:75px;" ${attrs}>
+                            <input pattern="(([1-9]|0[1-9])|(1[0-2]))" class="text-center col-12" type="number" placeholder="mm" ${this.input_fields[i].attribute}>
                         </td>\n
                     `;
                     break;
-                case "range_time":
+                default:
                     row.innerHTML += `
                         <td>
-                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" ${attrs}>
-                            -
-                            <input pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" type="text" placeholder="hh:mm" style="text-align:center; max-width:75px;" ${attrs}>
+                            <input class="text-center col-12" type="${this.input_fields[i].type}" ${this.input_fields[i].attribute}>
                         </td>\n
                     `;
-                    break;    
+                    break;
             }
         }
         row.setAttribute("onclick", this.tableId+".click(event)");
