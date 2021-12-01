@@ -17,7 +17,7 @@ from .modules.solov2 import SOLOV2
 from .utils import Table, cfg, config
 from .utils.imgutils import imresize
 
-IMG_FILE = os.path.join(settings.BASE_DIR, "video.jpg")
+IMG_FILE = os.path.join(settings.BASE_DIR, "img/video.jpg")
 
 # Load model
 model = SOLOV2(
@@ -83,8 +83,10 @@ def show_result_ins(img, result, score_thr=0.3, sort_by_density=False):
         center_y, center_x = ndimage.measurements.center_of_mass(cur_mask)
         vis_pos = (max(int(center_x) - 10, 0), int(center_y))
         cv2.putText(
-            img, label_text, vis_pos, cv2.FONT_HERSHEY_COMPLEX, 0.3, (255, 255, 255)
+            img, label_text, vis_pos, cv2.FONT_HERSHEY_COMPLEX, 1.0, (255, 255, 255)
         )  # green
+
+        print(f"index: {idx}, name: {label_text}")
 
     return img
 

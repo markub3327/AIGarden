@@ -49,7 +49,8 @@ class LiveTable
                 }
 
                 document.getElementById(this.tableId).deleteRow(this.activeRow[i].rowIndex);
-                //$("#removeButton").blur();   // Release button
+                let remove_btn = document.getElementById(this.remove_id);
+                remove_btn.blur();   // Release button
                 document.getElementById(this.remove_id).classList.add('disabled');
             }
             this.activeRow = []
