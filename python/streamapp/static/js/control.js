@@ -16,7 +16,7 @@ function control_pump(obj, id, val=null) {
         data: JSON.stringify(values),
         success: function () {
             // Display message
-            document.getElementById('msgResult').innerHTML = "Pump " + id + " is set to " + values['pump-' + id] + " %";
+            document.getElementById('msgResult').innerHTML = "Pump " + id + " is " + values['pump-' + id] + " %";
         },
         error: function(errMsg) {
             console.log(errMsg.status);

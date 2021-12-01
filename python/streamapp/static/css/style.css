@@ -104,4 +104,5 @@ nav .nav-link:hover {
 
 .row-border {
     border: 1px #212529 solid;
+    border-radius: 25px;
 }
