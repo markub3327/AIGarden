@@ -13,7 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>  
-  <script type="text/javascript"> 
+  <script>
     var refreshInterval = "{{ refreshInterval|safe }}";
   </script> 
   <script src="{% static 'js/sensors.js' %}"></script>
@@ -89,6 +89,7 @@
 
   <footer class="bg-dark text-center text-white" id="about">
     <div class="container p-4">
+        <h5>Social media</h5>
         <section class="mb-4">
             <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/martin.kubovcik/" role="button">
                 <i class="fa fa-instagram"></i>
@@ -97,6 +98,7 @@
                 <i class="fa fa-github"></i>
             </a>
         </section>
+        <h5>About us</h5>
         <section class="mb-4">
           AIGarden 🚰🌱🥕🍅 is an open-source project that uses Arduino and Raspberry Pi to automate your garden and simplified caring about your garden. 
           You can make watering autonomous and monitoring plants smarter.        
@@ -105,6 +107,6 @@
     <div class="text-center p-3 my-footer">
         © 2021 Copyright: Bc. Martin Kubovčík
     </div>
-</footer>
+  </footer>
 </body>
 </html>
