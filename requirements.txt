@@ -1,22 +1,10 @@
-###### OpenCV ######
+###### OpenCV plus extra modules without GUI ######
 #
-opencv-python>=3.
+opencv-contrib-python-headless
 #
 #
 ###### Django ######
 #
 Django
-#
-#
-###### PyTorch ######
-#
---find-links https://download.pytorch.org/whl/cpu/torch_stable.html
-
-torch==1.10.0
-#
-#
-###### PyTorch ######
-#
-scipy
 #
 #

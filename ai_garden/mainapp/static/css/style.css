@@ -1,0 +1,108 @@
+body {
+    font-family: Poppins, Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+.canvas-chartjs {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.print-header {
+    display: none !important;
+}
+
+.cam-stream {
+    max-width: 85%;
+}
+
+.my-footer {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.nav-link.active {
+    color: var(--bs-white) !important;
+}
+
+.nav-link {
+    color: #dee2e6 !important;
+    border-radius: .75rem !important;
+}
+
+nav .nav-link:hover {
+    color: #212529 !important;
+    border-radius: .75rem !important;
+    background-color: #dee2e6 !important;
+}
+
+.btn-run {
+    color: #ffffff !important;
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+}
+
+.btn-run:hover {
+    color: #dee2e6 !important;
+    background-color: #157347 !important;
+    border-color: #146c43 !important;
+}
+
+.btn-stop {
+    color: #ffffff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    width: 75% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
+.btn-stop:hover {
+    color: #dee2e6 !important;
+    background-color: #dc3545 !important;;
+    border-color: #dc3545 !important;;
+}
+
+.table-sensor {
+    --bs-table-bg: #fff3cd;
+    --bs-table-striped-bg: #f2e7c3;
+    --bs-table-striped-color: #212529;
+    --bs-table-active-bg: #e6dbb9;
+    --bs-table-active-color: #212529;
+    --bs-table-hover-bg: #ece1be;
+    --bs-table-hover-color: #212529;
+    color: #212529;
+}
+
+.table-plant {
+    --bs-table-bg: #d1e7dd;
+    --bs-table-striped-bg: #c7dbd2;
+    --bs-table-striped-color: #212529;
+    --bs-table-active-bg: #bcd0c7;
+    --bs-table-active-color: #212529;
+    --bs-table-hover-bg: #c1d6cc;
+    --bs-table-hover-color: #212529;
+    color: #212529;
+}
+
+.table-config {
+    --bs-table-bg: #cfe2ff;
+    --bs-table-striped-bg: #c5d7f2;
+    --bs-table-striped-color: #212529;
+    --bs-table-active-bg: #bacbe6;
+    --bs-table-active-color: #212529;
+    --bs-table-hover-bg: #bfd1ec;
+    --bs-table-hover-color: #212529;
+    color: #212529;
+}
+
+.table {
+    --bs-table-active-color: #212529;
+    --bs-table-active-bg: #dee2e6;
+    --bs-table-hover-color: #212529;
+    --bs-table-hover-bg: #dee2e6;
+}
+
+.row-border {
+    border: 1px #212529 solid;
+    border-radius: 25px;
+}

@@ -7,17 +7,40 @@
 [![Visits](https://badges.pufler.dev/visits/markub3327/AIGarden)](https://badges.pufler.dev)
 [![Updated](https://badges.pufler.dev/updated/markub3327/AIGarden)](https://badges.pufler.dev)
 
-This open-source project is using Arduino and Raspberry Pi to control your garden and simplified caring about the garden. You can make watering autonomous and monitoring plants smarter.
+This open-source project is using Raspberry Pi to control your garden and simplified caring about the garden. You can make watering autonomous and monitoring plants smarter.
 
-## Testing
+## Development
 ```shell
 docker build -t markub3327/ubuntu-web:latest ./docker
 ```
 
+## Deployment
+
+- ### Install packages
+```shell
+sudo apt update && sudo apt upgrade -y
+
+wget https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py
+
+git clone https://github.com/markub3327/AIGarden
+cd AIGarden/
+```
+- ### Install requirements 
+```shell
+python3 -m pip install -r requirements.txt --no-cache-dir
+```
+- ### Run (in developer mode)
+```shell
+cd ai_garden/
+python3 manage.py runserver 0:8000
+```
+
+
 | | |
 |------------------|------------------------------|
-| Operating system | Ubuntu Server 20.04          |
-| Boards           | Raspberry Pi 4, Arduino Nano |
+| Operating system | Ubuntu Server 22.04          |
+| Boards           | Raspberry Pi 4               |
 | Sensors          | DHT22, BMP180, Soil moisture |
 
 

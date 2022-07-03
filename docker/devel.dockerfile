@@ -38,7 +38,7 @@ COPY docker/config/sshd_config /etc/ssh/
 # install Web server
 RUN python3 -m pip install gunicorn whitenoise
 
-# nastav port pre Django
+# set Django port
 EXPOSE 8000 2222
 
 # copy API's files
