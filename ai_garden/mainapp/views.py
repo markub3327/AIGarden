@@ -53,7 +53,7 @@ def control(request):
         print(data)
 
         # set the pump
-        pwm.ChangeDutyCycle(data['pump-0'])
+        pwm.ChangeDutyCycle(int(data['pump-0']))
 
     return render(request, "control.html")
 
