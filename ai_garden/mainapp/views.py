@@ -20,17 +20,17 @@ def sensors(request):
     if "read" in request.GET and request.GET["read"] == "1":
         return JsonResponse(
             {
-                "Temp 0": [round(random.random() * 30), "°C", "[-50, 150]"],
-                "Temp 1": [round(random.random() * 30), "°C", "[-50, 150]"],
-                "Heat index": [round(random.random() * 35), "°C", "[-50, 150]"],
-                "Humidity 0": [round(random.random() * 35), "%", "[0, 100]"],
+                "Temp 0": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
+                "Temp 1": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
+                "Heat index": [round(random.random() * 3 + 31.5), "°C", "[-50, 150]"],
+                "Humidity 0": [round(random.random() * 4 + 33), "%", "[0, 100]"],
                 "Pressure 0": [
-                    round(random.random() * 1016),
+                    round(random.random() * 24 + 1004),
                     "hPa",
                     "[400, 1150]",
                 ],
-                "Soil moisture 0": [round(random.random() * 80), "%", "[0, 100]"],
-                "Soil moisture 1": [round(random.random() * 80), "%", "[0, 100]"],
+                "Soil moisture 0": [round(random.random() * 12 + 74), "%", "[0, 100]"],
+                "Soil moisture 1": [round(random.random() * 12 + 74), "%", "[0, 100]"],
             }
         )
     else:
