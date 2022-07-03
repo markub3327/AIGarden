@@ -19,9 +19,7 @@ docker build -t markub3327/ubuntu-web:latest ./docker
 - ### Install packages
 ```shell
 sudo apt update && sudo apt upgrade -y
-
-wget https://bootstrap.pypa.io/get-pip.py
-python3 get-pip.py
+sudo apt install python3-pip python3-dev build-essential
 
 git clone https://github.com/markub3327/AIGarden
 cd AIGarden/

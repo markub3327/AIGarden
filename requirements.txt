@@ -8,3 +8,8 @@ opencv-contrib-python-headless
 Django
 #
 #
+###### GPIO for Raspi ######
+#
+RPi.GPIO
+#
+#
