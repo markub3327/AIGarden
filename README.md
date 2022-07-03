@@ -19,10 +19,7 @@ docker build -t markub3327/ubuntu-web:latest ./docker
 - ### Install packages
 ```shell
 sudo apt update && sudo apt upgrade -y
-sudo apt install python3-lgpio
-
-wget https://bootstrap.pypa.io/get-pip.py
-python3 get-pip.py
+sudo apt install python3-lgpio python3-pip
 
 git clone https://github.com/markub3327/AIGarden
 cd AIGarden/
