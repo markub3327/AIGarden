@@ -262,4 +262,4 @@ $(document).ready(function () {
 });
 
 // Periodicaly update table
-setInterval(() => read_table(), refreshInterval);
+setInterval(() => read_table(), refreshInterval * 1000);  // in milliseconds
