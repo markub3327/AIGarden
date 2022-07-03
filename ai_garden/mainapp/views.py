@@ -1,7 +1,7 @@
 import datetime
 import json
 import random
-import RPi.GPIO as GPIO
+import lgpio
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
@@ -11,10 +11,7 @@ from .models import GardenPlan, PlantSpecification, Settings, WateringSchedule
 from .utils import Table
 
 # init GPIO
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(18, GPIO.OUT)
-pwm = GPIO.PWM(18, 1000)    # 1 kHz
-pwm.start(0)
+h = lgpio.gpiochip_open(0)
 
 def index(request):
     return render(request, "index.html")
@@ -53,7 +50,7 @@ def control(request):
         print(data)
 
         # set the pump
-        pwm.ChangeDutyCycle(int(data['pump-0']))
+        lgpio.tx_pwm(h, 18, 10000, int(data['pump-0']))
 
     return render(request, "control.html")
 
