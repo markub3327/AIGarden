@@ -4,8 +4,6 @@
 [![Issues](https://img.shields.io/github/issues/markub3327/AIGarden)](https://github.com/markub3327/AIGarden/issues)
 ![Commits](https://img.shields.io/github/commit-activity/w/markub3327/AIGarden)
 ![Size](https://img.shields.io/github/repo-size/markub3327/AIGarden)
-[![Visits](https://badges.pufler.dev/visits/markub3327/AIGarden)](https://badges.pufler.dev)
-[![Updated](https://badges.pufler.dev/updated/markub3327/AIGarden)](https://badges.pufler.dev)
 
 This open-source project is using Raspberry Pi to control your garden and simplified caring about the garden. You can make watering autonomous and monitoring plants smarter.
 
