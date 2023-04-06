@@ -8,8 +8,8 @@
 This open-source project is using Raspberry Pi to control your garden and simplified caring about the garden. You can make watering autonomous and monitoring plants smarter.
 
 ## Development
-```shell
-docker build -t markub3327/ubuntu-web:latest ./docker
+```shell   
+docker build -t markub3327/ubuntu-web:latest -f docker/devel.dockerfile .
 ```
 
 ## Deployment
