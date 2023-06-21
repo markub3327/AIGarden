@@ -8,8 +8,9 @@ opencv-contrib-python-headless
 Django
 #
 #
-###### GPIO for Raspi ######
+###### CircuitPython ######
 #
-RPi.GPIO
+adafruit-circuitpython-motor
+adafruit-circuitpython-dht
 #
 #

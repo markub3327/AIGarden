@@ -7,26 +7,26 @@
 
 This open-source project is using Raspberry Pi to control your garden and simplified caring about the garden. You can make watering autonomous and monitoring plants smarter.
 
-## Development
-```shell   
-docker build -t markub3327/ubuntu-web:latest -f docker/devel.dockerfile .
-```
-
 ## Deployment
 
-- ### Install packages
+### Install packages
 ```shell
 sudo apt update && sudo apt upgrade -y
-sudo apt install python3-lgpio python3-pip -y
+sudo apt install python3-pip -y
+```
+### Install CircuitPython
+[Installing CircuitPython on Raspberry Pi](https://learn.adafruit.com/circuitpython-on-raspberrypi-linux/installing-circuitpython-on-raspberry-pi)
 
+### Download project
+```shell
 git clone https://github.com/markub3327/AIGarden
 cd AIGarden/
 ```
-- ### Install requirements 
+### Install requirements 
 ```shell
 python3 -m pip install -r requirements.txt --no-cache-dir
 ```
-- ### Run (in developer mode)
+### Run
 ```shell
 cd ai_garden/
 python3 manage.py runserver 0:8000
@@ -35,10 +35,10 @@ python3 manage.py runserver 0:8000
 
 | | |
 |------------------|------------------------------|
-| Operating system | Ubuntu Server 22.04          |
+| Operating system | Debian 11 Bullseye           |
 | Boards           | Raspberry Pi 4               |
-| Sensors          | DHT22, BMP180, Soil moisture |
+| Sensors          | DHT22, Soil moisture, PiCam  |
 
 
 ------------------------------------------
-**Frameworks:** Tensorflow, OpenCV, Django
+**Frameworks:** OpenCV, Django, CircuitPython
