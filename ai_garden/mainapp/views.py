@@ -1,36 +1,102 @@
+import time
 import datetime
 import json
 import random
-import lgpio
+import cv2
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
+from collections import deque
+
+import board
+import adafruit_dht
+import pwmio
+import digitalio
+from adafruit_motor import motor
+
+from picamera2 import Picamera2
 
 from .models import GardenPlan, PlantSpecification, Settings, WateringSchedule
 from .utils import Table
 
-# init GPIO
-h = lgpio.gpiochip_open(0)
+# buffers
+temp_0_buff, humidity_buff, soil_0_buff = deque(maxlen=1), deque(maxlen=1), deque(maxlen=1)
+
+# init soil
+soil_0 = digitalio.DigitalInOut(board.D4)
+soil_0.direction = digitalio.Direction.INPUT
+soil_0.pull = digitalio.Pull.DOWN
+
+# init camera
+picam2 = Picamera2()
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)}))
+picam2.start()
+
+# init DHT22
+dhtDevice = adafruit_dht.DHT22(board.D18)
+
+# DC motor setup
+# DC Motors generate electrical noise when running that can reset the microcontroller in extreme
+# cases. A capacitor can be used to help prevent this.
+pwm_a = pwmio.PWMOut(board.D23, frequency=1600)
+pwm_b = pwmio.PWMOut(board.D24, frequency=1600)
+pump_0 = motor.DCMotor(pwm_a, pwm_b)
+
+
+def img_generator():
+    while True:
+        frame = picam2.capture_array()
+
+        # compression
+        ret, jpeg = cv2.imencode(".jpg", frame)
+
+        time.sleep(0.04)  # 25 FPS
+        yield (
+            b"--frame\r\n"
+            b"Content-Type: image/jpeg\r\n\r\n" + jpeg.tobytes() + b"\r\n\r\n"
+        )
+
+def video_feed(request):
+    return StreamingHttpResponse(
+        img_generator(), content_type="multipart/x-mixed-replace;boundary=frame"
+    )
 
 def index(request):
     return render(request, "index.html")
 
 def sensors(request):
     if "read" in request.GET and request.GET["read"] == "1":
+        # get temp and humidity
+        try:
+            temp_0 = dhtDevice.temperature
+            humidity_0 = dhtDevice.humidity
+            
+            temp_0_buff.append(temp_0)
+            humidity_buff.append(humidity_0)
+        except RuntimeError as e:
+            temp_0 = temp_0_buff[-1]
+            humidity_0 = humidity_buff[-1]
+        except Exception as e:
+            dhtDevice.exit()
+            raise e
+
+        # get soil
+        soil_0_buff.append(int(not soil_0.value))
+
         return JsonResponse(
             {
-                "Temp 0": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
-                "Temp 1": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
-                "Heat index": [round(random.random() * 3 + 31.5), "°C", "[-50, 150]"],
-                "Humidity 0": [round(random.random() * 4 + 33), "%", "[0, 100]"],
-                "Pressure 0": [
-                    round(random.random() * 24 + 1004),
-                    "hPa",
-                    "[400, 1150]",
-                ],
-                "Soil moisture 0": [round(random.random() * 12 + 74), "%", "[0, 100]"],
-                "Soil moisture 1": [round(random.random() * 12 + 74), "%", "[0, 100]"],
+                "Temperature 0": [temp_0, "°C", "[-40, 80]"],
+                # "Temp 1": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
+                # "Heat index": [round(random.random() * 3 + 31.5), "°C", "[-50, 150]"],
+                "Humidity 0": [humidity_0, "%", "[0, 100]"],
+                #"Pressure 0": [
+                #    round(random.random() * 24 + 1004),
+                #    "hPa",
+                #    "[400, 1150]",
+                #],
+                "Soil moisture 0": [soil_0_buff[-1] * 100, "%", "[0, 100]"],
+                #"Soil moisture 1": [round(random.random() * 12 + 74), "%", "[0, 100]"],
             }
         )
     else:
@@ -47,10 +113,11 @@ def sensors(request):
 def control(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data)
+        
+        # run only if pots are dry
+        if soil_0_buff[-1] == 0:
+            pump_0.throttle = float(data['pump-0']) / 100.
 
-        # set the pump
-        lgpio.tx_pwm(h, 18, 10000, int(data['pump-0']))
 
     return render(request, "control.html")
 

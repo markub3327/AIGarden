@@ -20,7 +20,7 @@ def main():
 
 if __name__ == "__main__":
     print("AIGarden 🚰🌱🥕🍅")
-    print("Bc. Martin Kubovčík")
+    print("Martin Kubovčík")
     print("https://github.com/markub3327/AIGarden")
     print()
 

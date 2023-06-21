@@ -7,4 +7,5 @@ urlpatterns = [
     path("plants", views.plants, name="plants"),
     path("control", views.control, name="control"),
     path("settings", views.settings, name="settings"),
+    path("video_feed", views.video_feed, name="video_feed"),
 ]

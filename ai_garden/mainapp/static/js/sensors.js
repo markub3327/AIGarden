@@ -26,22 +26,23 @@ function read_table() {
         // Firstly clean the graph 
         chartjs_removeData(myChart_temp);
         chartjs_removeData(myChart_humid);
-        chartjs_removeData(myChart_press);
+        // chartjs_removeData(myChart_press);
         chartjs_removeData(myChart_soil);
 
+        
         // Store new measurements
         var today = new Date();
-        chartjs_addData(myChart_temp, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[0][1][0], actualData[1][1][0]]);
-        chartjs_addData(myChart_humid, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[3][1][0]]);
-        chartjs_addData(myChart_press, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[4][1][0]]);
-        chartjs_addData(myChart_soil, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[5][1][0], actualData[6][1][0]]);
+        chartjs_addData(myChart_temp, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[0][1][0]]);
+        chartjs_addData(myChart_humid, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[1][1][0]]);
+        // chartjs_addData(myChart_press, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[4][1][0]]);
+        chartjs_addData(myChart_soil, today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(), [actualData[2][1][0]]);
     }).fail(function(jqXHR, textStatus, errorThrown) {
         console.log(jqXHR, textStatus, errorThrown);
     });
 }
 
 function chartjs_removeData(chart) {
-    if (chart.data.labels.length > 64) {
+    if (chart.data.labels.length > 128) {
         chart.data.labels.shift();
         chart.data.datasets.forEach((dataset) => {
             dataset.data.shift();
@@ -64,17 +65,18 @@ $(document).ready(function () {
         type: "line",
         data: {
           datasets: [{
-            label: "Temp 0",
+            label: "Temperature 0",
             fill: false,
             backgroundColor: "#17a2b8",
             borderColor: "#17a2b8",
-          },
-          {
-            label: "Temp 1",
-            fill: false,
-            backgroundColor: "#dc3545",
-            borderColor: "#dc3545",
-          }]
+          }
+          // {
+          //  label: "Temp 1",
+          //  fill: false,
+          //  backgroundColor: "#dc3545",
+          //  borderColor: "#dc3545",
+          //}
+          ]
         },
         options: {
             title: {
@@ -92,7 +94,7 @@ $(document).ready(function () {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'temperature [°C]',
+                        labelString: 'Temperature [°C]',
                         fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     },
                     ticks: {
@@ -102,7 +104,7 @@ $(document).ready(function () {
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'time',
+                        labelString: 'Time',
                         fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     },
                     ticks: {
@@ -138,7 +140,7 @@ $(document).ready(function () {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'humidity [%]',
+                        labelString: 'Humidity [%]',
                         fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     },
                     ticks: {
@@ -148,7 +150,7 @@ $(document).ready(function () {
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'time',
+                        labelString: 'Time',
                         fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     },
                     ticks: {
@@ -158,67 +160,68 @@ $(document).ready(function () {
             }
         }
     });
-    myChart_press = new Chart("myChart_press", {
-        type: "line",
-        data: {
-          datasets: [{
-            label: "Pressure 0",
-            fill: false,
-            backgroundColor: "#198754",
-            borderColor: "#198754",
-          }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Pressure',
-                fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
-            },
-            legend: {
-                display: true,
-                labels: {
-                    fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
-                }
-            },
-            scales: {
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'pressure [hPa]',
-                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
-                    },
-                    ticks: {
-                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
-                    }
-                }],
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'time',
-                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
-                    },
-                    ticks: {
-                        fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
-                    }
-                }]
-            }
-        }
-    });
+    //~ myChart_press = new Chart("myChart_press", {
+        //~ type: "line",
+        //~ data: {
+          //~ datasets: [{
+            //~ label: "Pressure 0",
+            //~ fill: false,
+            //~ backgroundColor: "#198754",
+            //~ borderColor: "#198754",
+          //~ }]
+        //~ },
+        //~ options: {
+            //~ title: {
+                //~ display: true,
+                //~ text: 'Pressure',
+                //~ fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+            //~ },
+            //~ legend: {
+                //~ display: true,
+                //~ labels: {
+                    //~ fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                //~ }
+            //~ },
+            //~ scales: {
+                //~ yAxes: [{
+                    //~ scaleLabel: {
+                        //~ display: true,
+                        //~ labelString: 'Pressure [hPa]',
+                        //~ fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    //~ },
+                    //~ ticks: {
+                        //~ fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    //~ }
+                //~ }],
+                //~ xAxes: [{
+                    //~ scaleLabel: {
+                        //~ display: true,
+                        //~ labelString: 'Time',
+                        //~ fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    //~ },
+                    //~ ticks: {
+                        //~ fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+                    //~ }
+                //~ }]
+            //~ }
+        //~ }
+    //~ });
     myChart_soil = new Chart("myChart_soil", {
         type: "line",
         data: {
             datasets: [{
                 label: "Soil 0",
                 fill: false,
-                backgroundColor: "#17a2b8",
-                borderColor: "#17a2b8",
-              },
-              {
-                label: "Soil 0",
-                fill: false,
-                backgroundColor: "#dc3545",
-                borderColor: "#dc3545",
-              }]
+                backgroundColor: "#198754",
+                borderColor: "#198754",
+              }
+              // {
+              //  label: "Soil 0",
+              //  fill: false,
+              //  backgroundColor: "#dc3545",
+              //  borderColor: "#dc3545",
+              //}
+              ]
         },
         options: {
             title: {
@@ -236,7 +239,7 @@ $(document).ready(function () {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'soil moisture [%]',
+                        labelString: 'Soil moisture [%]',
                         fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     },
                     ticks: {
@@ -246,7 +249,7 @@ $(document).ready(function () {
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'time',
+                        labelString: 'Time',
                         fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
                     },
                     ticks: {
