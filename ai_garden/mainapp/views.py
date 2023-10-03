@@ -2,48 +2,87 @@ import json
 import time
 import datetime
 import cv2
+import os
+import torch
+import numpy as np
+from scipy import ndimage
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
 
 from .models import GardenPlan, PlantSpecification, Settings, WateringSchedule
-from .utils import Table
+from .utils import Table, cfg, config
 from .io import temp_0_buff, humidity_buff, soil_0_buff, pump_0
 
 from picamera2 import Picamera2
+from .modules.solov2 import SOLOV2
+from .utils.imgutils import imresize
+
+
+# Load model
+model = SOLOV2(
+    cfg,
+    pretrained=os.path.join(settings.BASE_DIR, "models/solov2_448_r18_epoch_36.pth"),
+    mode="test",
+)
 
 # init camera
 picam2 = Picamera2()
-picam2.configure(
-    picam2.create_preview_configuration(main={"format": "XRGB8888", "size": (640, 480)})
-)
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (512, 512)}))
 picam2.start()
 
 
 def img_generator():
     while True:
         frame = picam2.capture_array()
+        frame = frame[:, :, :-1]
+        frame = cv2.rotate(frame, cv2.ROTATE_180)
+        
+        # Preprocess the input image
+        img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        img = img.transpose(2, 0, 1)
+        img = img.astype(np.float32)
+
+        # global standardization of pixels
+        img[0, :, :] = (img[0, :, :] - config.MEANS[0]) / config.STD[0]
+        img[1, :, :] = (img[1, :, :] - config.MEANS[1]) / config.STD[1]
+        img[2, :, :] = (img[2, :, :] - config.MEANS[2]) / config.STD[2]
+
+        # img = torch.from_numpy(img).cuda().unsqueeze(0)
+        img = torch.from_numpy(img).unsqueeze(0)
+
+        with torch.no_grad():
+            seg_result = model.simple_test(
+                img=img,
+                img_meta=[
+                    {
+                        "ori_shape": frame.shape,
+                        "img_shape": frame.shape,
+                        "scale_factor": 1,
+                    }
+                ],
+            )
+        frame, counter = show_result_ins(frame, seg_result)
 
         # compression
         ret, jpeg = cv2.imencode(".jpg", frame)
 
-        time.sleep(0.04)  # 25 FPS
+        print("Pocet: ", counter)
+
+        # time.sleep(0.04)  # 25 FPS
         yield (
             b"--frame\r\n"
             b"Content-Type: image/jpeg\r\n\r\n" + jpeg.tobytes() + b"\r\n\r\n"
         )
-
 
 def video_feed(request):
     return StreamingHttpResponse(
         img_generator(), content_type="multipart/x-mixed-replace;boundary=frame"
     )
 
-
 def index(request):
     return render(request, "index.html")
-
 
 def sensors(request):
     if "read" in request.GET and request.GET["read"] == "1":
@@ -53,13 +92,13 @@ def sensors(request):
                 # "Temp 1": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
                 # "Heat index": [round(random.random() * 3 + 31.5), "°C", "[-50, 150]"],
                 "Humidity 0": [humidity_buff[-1], "%", "[0, 100]"],
-                # "Pressure 0": [
+                #"Pressure 0": [
                 #    round(random.random() * 24 + 1004),
                 #    "hPa",
                 #    "[400, 1150]",
-                # ],
+                #],
                 "Soil moisture 0": [soil_0_buff[-1] * 100, "%", "[0, 100]"],
-                # "Soil moisture 1": [round(random.random() * 12 + 74), "%", "[0, 100]"],
+                #"Soil moisture 1": [round(random.random() * 12 + 74), "%", "[0, 100]"],
             }
         )
     else:
@@ -73,17 +112,16 @@ def sensors(request):
             },
         )
 
-
 def control(request):
     if request.method == "POST":
         data = json.loads(request.body)
-
+        
         # run only if pots are dry
         if soil_0_buff[-1] == 0:
-            pump_0.throttle = float(data["pump-0"]) / 100.0
+            pump_0.throttle = float(data['pump-0']) / 100.
+
 
     return render(request, "control.html")
-
 
 def settings(request):
     if request.method == "POST":
@@ -125,7 +163,6 @@ def settings(request):
                 "wateringSchedule": Table(WateringSchedule),
             },
         )
-
 
 def plants(request):
     if request.method == "POST":
@@ -173,3 +210,65 @@ def plants(request):
                 "plantSpecification": Table(PlantSpecification),
             },
         )
+
+def show_result_ins(img, result, score_thr=0.3, sort_by_density=False):
+    h, w, _ = img.shape
+    counter = 0
+    
+    cur_result = result[0]
+    seg_label = cur_result[0]
+    seg_label = seg_label.cpu().numpy().astype(np.uint8)
+    cate_label = cur_result[1]
+    cate_label = cate_label.cpu().numpy()
+    score = cur_result[2].cpu().numpy()
+
+    vis_inds = score > score_thr
+    seg_label = seg_label[vis_inds]
+    num_mask = seg_label.shape[0]
+    cate_label = cate_label[vis_inds]
+    cate_score = score[vis_inds]
+
+    if sort_by_density:
+        mask_density = []
+        for idx in range(num_mask):
+            cur_mask = seg_label[idx, :, :]
+            cur_mask = imresize(cur_mask, (w, h))
+            cur_mask = (cur_mask > 0.5).astype(np.int32)
+            mask_density.append(cur_mask.sum())
+        orders = np.argsort(mask_density)
+        seg_label = seg_label[orders]
+        cate_label = cate_label[orders]
+        cate_score = cate_score[orders]
+
+    np.random.seed(42)
+    color_masks = [
+        np.random.randint(0, 256, (1, 3), dtype=np.uint8) for _ in range(num_mask)
+    ]
+    # img_show = None
+    for idx in range(num_mask):
+        idx = -(idx + 1)
+        cur_mask = seg_label[idx, :, :]
+        cur_mask = imresize(cur_mask, (w, h))
+        cur_mask = (cur_mask > 0.5).astype(np.uint8)
+        if cur_mask.sum() == 0:
+            continue
+        color_mask = color_masks[idx]
+        cur_mask_bool = cur_mask.astype(np.bool_)
+        img[cur_mask_bool] = img[cur_mask_bool] * 0.5 + color_mask * 0.5
+
+        # 当前实例的类别
+        cur_cate = cate_label[idx]
+        realclass = config.COCO_LABEL[cur_cate]
+        cur_score = cate_score[idx]
+
+        name_idx = config.COCO_LABEL_MAP[realclass]
+        label_text = config.COCO_CLASSES[name_idx - 1]
+        label_text += "|{:.02f}".format(cur_score)
+        center_y, center_x = ndimage.measurements.center_of_mass(cur_mask)
+        vis_pos = (max(int(center_x) - 10, 0), int(center_y))
+        cv2.putText(
+            img, label_text, vis_pos, cv2.FONT_HERSHEY_COMPLEX, 0.3, (255, 255, 255)
+        )  # green
+        counter += 1
+
+    return img, counter
