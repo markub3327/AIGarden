@@ -16,7 +16,7 @@
     function createPreview() {
       img = document.createElement("IMG");
       img.className += "mx-auto d-block rounded cam-stream";    // Zobraz IMG ako block a centruj na stred stranky
-      //img.src = "";
+      img.src = "{% url 'video_feed' %}";
 
       return img;
     }
@@ -33,13 +33,13 @@
     function showStream(e) {
       enablePreview = e.target;
       imgPreview = document.getElementById("imgPreview");
-      // if (enablePreview.checked) {
-      //   imgPreview.appendChild(
-      //     createPreview()
-      //   );
-      // } else {
-      //   imgPreview.removeChild(imgPreview.lastElementChild);
-      // }
+      if (enablePreview.checked) {
+        imgPreview.appendChild(
+          createPreview()
+        );
+      } else {
+        imgPreview.removeChild(imgPreview.lastElementChild);
+      }
     }
   </script>
 </head>
@@ -117,7 +117,7 @@
         </section>
     </div>
     <div class="text-center p-3 my-footer">
-        © 2022 Copyright: Bc. Martin Kubovčík
+        © 2023 Copyright: Martin Kubovčík
     </div>
   </footer>
 </body>

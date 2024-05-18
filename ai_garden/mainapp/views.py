@@ -1,17 +1,60 @@
-import datetime
 import json
-import random
-import lgpio
+import time
+import datetime
+import cv2
+import os
+import numpy as np
+from scipy import ndimage
 
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
 
 from .models import GardenPlan, PlantSpecification, Settings, WateringSchedule
-from .utils import Table
+from .utils import Table, cfg, config
+from .io import temp_0_buff, humidity_buff, soil_0_buff, pump_0
 
-# init GPIO
-h = lgpio.gpiochip_open(0)
+from picamera2 import Picamera2
+from ultralytics import YOLO
+
+# Load a YOLOv8n PyTorch model
+model = YOLO('yolov8n.pt')
+
+# Export the model to NCNN format
+model.export(format='ncnn')  # creates 'yolov8n_ncnn_model'
+
+# Load the exported NCNN model
+ncnn_model = YOLO('yolov8n_ncnn_model')
+
+# init camera
+picam2 = Picamera2()
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (128, 128)}))
+picam2.start()
+
+
+def img_generator():
+    while True:
+        frame = picam2.capture_array()
+        frame = frame[:, :, :-1]
+        frame = cv2.rotate(frame, cv2.ROTATE_180)
+        
+        # Run inference
+        frame = ncnn_model(frame)[0]
+
+        frame = cv2.resize(frame.plot(), (512, 512), interpolation= cv2.INTER_CUBIC)
+
+        # compression
+        ret, jpeg = cv2.imencode(".jpg", frame)
+
+        yield (
+            b"--frame\r\n"
+            b"Content-Type: image/jpeg\r\n\r\n" + jpeg.tobytes() + b"\r\n\r\n"
+        )
+
+def video_feed(request):
+    return StreamingHttpResponse(
+        img_generator(), content_type="multipart/x-mixed-replace;boundary=frame"
+    )
 
 def index(request):
     return render(request, "index.html")
@@ -20,17 +63,17 @@ def sensors(request):
     if "read" in request.GET and request.GET["read"] == "1":
         return JsonResponse(
             {
-                "Temp 0": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
-                "Temp 1": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
-                "Heat index": [round(random.random() * 3 + 31.5), "°C", "[-50, 150]"],
-                "Humidity 0": [round(random.random() * 4 + 33), "%", "[0, 100]"],
-                "Pressure 0": [
-                    round(random.random() * 24 + 1004),
-                    "hPa",
-                    "[400, 1150]",
-                ],
-                "Soil moisture 0": [round(random.random() * 12 + 74), "%", "[0, 100]"],
-                "Soil moisture 1": [round(random.random() * 12 + 74), "%", "[0, 100]"],
+                "Temperature 0": [temp_0_buff[-1], "°C", "[-40, 80]"],
+                # "Temp 1": [round(random.random() * 3 + 28.5), "°C", "[-50, 150]"],
+                # "Heat index": [round(random.random() * 3 + 31.5), "°C", "[-50, 150]"],
+                "Humidity 0": [humidity_buff[-1], "%", "[0, 100]"],
+                #"Pressure 0": [
+                #    round(random.random() * 24 + 1004),
+                #    "hPa",
+                #    "[400, 1150]",
+                #],
+                "Soil moisture 0": [soil_0_buff[-1] * 100, "%", "[0, 100]"],
+                #"Soil moisture 1": [round(random.random() * 12 + 74), "%", "[0, 100]"],
             }
         )
     else:
@@ -47,10 +90,11 @@ def sensors(request):
 def control(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data)
+        
+        # run only if pots are dry
+        if soil_0_buff[-1] == 0:
+            pump_0.throttle = float(data['pump-0']) / 100.
 
-        # set the pump
-        lgpio.tx_pwm(h, 18, 10000, int(data['pump-0']))
 
     return render(request, "control.html")
 
